@@ -1,0 +1,40 @@
+{
+    "project_info": {
+      "project_number": "756258028961",
+      "firebase_url": "https://eap-ads.firebaseio.com",
+      "project_id": "eap-ads",
+      "storage_bucket": "eap-ads.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:756258028961:android:60c85c1a0565668c765fe0",
+          "android_client_info": {
+            "package_name": "io.eap.starter"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "756258028961-s4j4ucjc5js3062f2bp9muldpe5e8588.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDpv_5iIdi6mfpzUrMbNeCGh79v7tFm_RU"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "756258028961-s4j4ucjc5js3062f2bp9muldpe5e8588.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
