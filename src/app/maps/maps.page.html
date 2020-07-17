@@ -1,0 +1,40 @@
+
+<div class="header">
+  <div style="display: flex;
+    font-size: 25px;
+    width: 100%;
+    align-items: center;justify-content: space-between;">
+   
+  <ion-title style="margin-left: -12px;
+  font-size: 15px;">  Select Locality </ion-title> 
+  <ion-icon name="close-outline" (click)="dismiss()"></ion-icon>
+
+</div>
+<ion-searchbar [(ngModel)]="autocomplete.query"    (ionInput)="updateSearch()" (ionCancel)="dismiss()"></ion-searchbar>
+
+  
+</div>
+
+
+<ion-content>
+  <ion-list *ngIf="autocompleteItems.length">
+    <ion-item *ngFor="let item of autocompleteItems" tappable   (click)="chooseItem(item)">
+      {{ item }}
+    </ion-item>
+  </ion-list>
+  <div #mapElement class="map" [hidden]="autocompleteItems.length"></div>
+  <div class="card" *ngIf="autocomplete.query && autocompleteItems.length<1" style="position: fixed;bottom:0px;width: 100%;">
+      <ion-grid>
+        <ion-row>
+        <ion-col size="10" style="font-size:12px">
+          <p>{{autocomplete.query}} </p>
+        </ion-col>
+        <ion-col size="2">
+          <ion-icon (click)="dismiss()" name="checkmark-done-circle-outline" style="font-size:40px;color:green"></ion-icon>
+        </ion-col>
+      </ion-row>
+      </ion-grid>
+  </div>
+</ion-content>
+
+

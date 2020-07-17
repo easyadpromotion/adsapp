@@ -1,0 +1,242 @@
+<div class="form-page">
+
+  <div class="header">
+    <div class="header-title">
+      <img src="assets/images/left-icon.png" (click)="clearData()" >
+      <ion-title> Update Frame Ad </ion-title>
+    </div>
+  </div>
+  
+  <div class="page white-bg form-page">
+    <div [formGroup]="createPhotoFrameForm" class="form">
+      <div class="card-body">
+        <div class="row">
+  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Name of Photo *</label>
+            <input class="form-control" formControlName="name" placeholder="Enter Name of Photo">
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createPhotoFrameForm.controls['name'].invalid && (createPhotoFrameForm.controls['name'].dirty || createPhotoFrameForm.controls['name'].touched)"
+              class="invalid-data">
+              Please enter name  of photo </small>
+          </div>
+  
+  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Description *</label>
+            <textarea rows="4" cols="50" class="form-control" formControlName="description" placeholder="Enter Description" ></textarea>
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createPhotoFrameForm.controls['description'].invalid && (createPhotoFrameForm.controls['description'].dirty || createPhotoFrameForm.controls['description'].touched)"
+              class="invalid-data">
+              Please enter description </small>
+          </div>
+  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Category *</label>
+            
+            <select class="form-control" formControlName="category" placeholder="Select Category">
+              <option value="">Select Category</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Individual">Individual</option>
+            </select>
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createPhotoFrameForm.controls['category'].invalid && (createPhotoFrameForm.controls['category'].dirty || createPhotoFrameForm.controls['category'].touched)"
+              class="invalid-data">
+              Please enter category          </small>
+          </div>
+  
+  
+  
+          <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Target Count *</label>
+            <input  class="form-control" formControlName="targetCount" type="number"  (ngModelChange)=targetChange(this.createPhotoFrameForm.value.targetCount) placeholder="Enter Target Count">
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createPhotoFrameForm.controls['targetCount'].invalid && (createPhotoFrameForm.controls['targetCount'].dirty || createPhotoFrameForm.controls['targetCount'].touched)"
+              class="invalid-data">
+              Please enter target count</small>
+          </div> -->
+  
+  
+  
+          <!-- <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+            <ion-select-option value="brown">Brown</ion-select-option>
+            <ion-select-option value="blonde">Blonde</ion-select-option>
+            <ion-select-option value="black">Black</ion-select-option>
+            <ion-select-option value="red">Red</ion-select-option>
+          </ion-select> -->
+  
+          <!-- <ion-select multiple="true" formControlName="targetType">
+            <ion-option (ionSelect)="allClicked()">select all</ion-option>
+            <ion-option *ngFor="let item of gender ; let i = index"
+             [selected]="item.checked" [value]="item">{{item.studentName}}</ion-option>
+      </ion-select> -->
+  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Target Gender *</label>
+            <ng-multiselect-dropdown
+    [placeholder]="'Select Target Gender'"
+    [data]="gender"
+    formControlName="targetType"
+    [settings]="dropdownSettings"
+  >
+  </ng-multiselect-dropdown>
+  <!-- <small class="form-text text-muted invalid-data"
+  *ngIf="createPhotoFrameForm.controls['targetType'].invalid && (createPhotoFrameForm.controls['targetType'].dirty || createPhotoFrameForm.controls['targetType'].touched)"
+  class="invalid-data">
+  Please enter Target Gender</small> -->
+          </div>
+  
+          <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Target Type</label>
+            <ng-multiselect-dropdown
+    [placeholder]="'Select Target Type'"
+    [data]="types"
+    formControlName="targetType"
+    [settings]="dropdownSettings"
+  >
+  </ng-multiselect-dropdown>
+  
+          </div>
+  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Target Age</label>
+          
+            <ng-multiselect-dropdown
+    [placeholder]="'Select Target Age'"
+    [data]="ages"
+    formControlName="targetAge"
+    [settings]="dropdownSettings"
+  >
+  </ng-multiselect-dropdown>
+           
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createPhotoFrameForm.controls['targetAge'].invalid && (createPhotoFrameForm.controls['targetAge'].dirty || createPhotoFrameForm.controls['targetAge'].touched)"
+              class="invalid-data">
+              Please select target Age</small>
+          </div> -->
+         
+          <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Amount(In Rs.)</label>
+            <input [disabled]="true" class="form-control" formControlName="amount" type="number" placeholder="Enter Amount">
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createPhotoFrameForm.controls['amount'].invalid && (createPhotoFrameForm.controls['amount'].dirty || createPhotoFrameForm.controls['amount'].touched)"
+              class="invalid-data">
+              Please enter amount </small>
+          </div> -->
+  
+          <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Payment Amount(In Rs.)</label>
+            <input [disabled]="true"  class="form-control" formControlName="paymentAmount" type="number" placeholder="Enter Payment Amount">
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createPhotoFrameForm.controls['paymentAmount'].invalid && (createPhotoFrameForm.controls['paymentAmount'].dirty || createPhotoFrameForm.controls['paymentAmount'].touched)"
+              class="invalid-data">
+              Please enter payment amount </small>
+          </div> -->
+          <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Photo Frame Category *</label>
+  
+            <select class="form-control" formControlName="photoFrameCategory" (ngModelChange)="getImageFrames()">
+            
+              <option value="">Select Category</option>
+              <option *ngFor="let item of frames" [value]="item._id">{{item.type}}</option>
+            </select>
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createPhotoFrameForm.controls['photoFrameCategory'].invalid && (createPhotoFrameForm.controls['photoFrameCategory'].dirty || createPhotoFrameForm.controls['photoFrameCategory'].touched)"
+              class="invalid-data">
+              Please enter photo frame category </small>
+          </div> -->
+  
+          <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+            <label> Frame *</label>
+  
+            <select class="form-control" formControlName="photoFrame" placeholder="Select Photo Frame">
+              <option value="">Select Frame</option>
+              <option *ngFor="let item of imageFrames" [value]="item.image">{{item.name}}</option>
+            </select>
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createPhotoFrameForm.controls['photoFrame'].invalid && (createPhotoFrameForm.controls['photoFrame'].dirty || createPhotoFrameForm.controls['photoFrame'].touched)"
+              class="invalid-data">
+              Please enter photo frame</small>
+          </div> -->
+  
+        <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+          <label> Frame Url *</label>
+          <input class="form-control" type="file" (change)="onFileChange($event)" placeholder="Enter Photo Frame Url">
+         
+         
+        </div>
+  
+        <div class="col-xs-12 col-md-6 col-sm-6" *ngIf="createPhotoFrame">
+          
+          <img id="borderimg1"  [ngStyle]="{'border-image': 'url('+httpService.serverUrl+'frames/'+createPhotoFrame.value.photoFrame+') 30 round'}"  class="card-img-top" width="100%" [src]="httpService.imageUrl+getSplittedname(createPhotoFrame.value.photoFrameUrl)" alt="Card image cap">
+      
+        </div> -->
+        <!-- <img  [src]="httpService.imageUrl+getSplittedname(editDetails.photoFrameUrl)" width="100%"> -->
+  
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Start Date *</label>
+          <ion-datetime  displayFormat="DD/MM/YYYY" placeholder="Enter Start Date" formControlName="startDate"  class="form-control"></ion-datetime>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createPhotoFrameForm.controls['startDate'].invalid && (createPhotoFrameForm.controls['startDate'].dirty || createPhotoFrameForm.controls['startDate'].touched)"
+            class="invalid-data">
+            Please enter start date </small>
+        </div>
+  
+  
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>End Date *</label>
+          <ion-datetime  displayFormat="DD/MM/YYYY" placeholder="Enter End Date" formControlName="endDate"  class="form-control"></ion-datetime>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createPhotoFrameForm.controls['endDate'].invalid && (createPhotoFrameForm.controls['endDate'].dirty || createPhotoFrameForm.controls['endDate'].touched)"
+            class="invalid-data">
+            Please enter end date </small>
+        </div>
+  
+      
+  
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Payment Mode *</label>
+          <select formControlName="mode" class="form-control">
+            <option value="">Select Payment Mode</option>
+            <option value="view">On View</option>
+            <option value="like">On Like</option>
+            <option value="share">On Share</option>
+          </select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createPhotoFrameForm.controls['mode'].invalid && (createPhotoFrameForm.controls['mode'].dirty || createPhotoFrameForm.controls['mode'].touched)"
+            class="invalid-data">
+            Please enter Payment Mode </small>
+        </div>
+  
+        <!-- <div class="col-xs-12 col-sm-6 col-md-6" >
+          <label>Pinned Address</label>
+         <p>{{createPhotoFrameForm.value.locality.address}}</p> 
+        </div> -->
+        
+      
+        <div class="col-xs-12 col-sm-6 col-md-6 " >
+          <div class="upload-card" >
+            <p *ngIf="createPhotoFrameForm.value.locality">{{createPhotoFrameForm.value.locality.address}}</p>
+            <button (click)="getLocality()" style="background: #FF3162;color:#fff;padding:5px;margin:10px;float:right">Pin Locality *</button>
+          </div>
+        
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createPhotoFrameForm.controls['locality'].invalid && (createPhotoFrameForm.controls['locality'].dirty || createPhotoFrameForm.controls['locality'].touched)"
+            class="invalid-data">
+            Please enter Locality </small>
+        </div>
+  
+      </div>
+    </div>
+    <button class="footer-button white-text"  (click)="submit(createPhotoFrameForm.value)">
+      Submit
+     </button>
+  </div>
+  
+  </div>
+  
+  
+  
+  
+  </div>
+  

@@ -1,0 +1,66 @@
+.page{
+    background: #fff;
+    padding:0
+}
+
+
+ion-input{
+    border:2px solid #ccc;
+    color:#000;
+    input{
+        color:#000 !important
+    }
+}
+
+
+ion-col{
+    text-align: center;
+}
+
+.container{
+    padding:20px;
+}
+
+.submit{
+    padding:10px;
+}
+
+.keypad{
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    background: #eee;
+    ion-col{
+        padding: 10px;
+    }
+    button{
+        background: #fff;
+        color: #000;
+        width: 100%;
+        height: 35px;
+        border-radius: 5px;
+    }
+    .submit{
+        button{
+            height:40px
+        }
+    }
+}
+
+.otp-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    input{
+        width: 40px;height:40px;background: #eee;color:#000;
+        text-align: center;
+        margin-right:10px;
+        border-radius:5px;
+        box-shadow:0 4px 8px 0 rgba(0,0,0,0.2);
+        border:0px;
+    }
+}
+
+.header{
+    height:80px
+}

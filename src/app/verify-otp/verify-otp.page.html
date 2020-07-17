@@ -1,0 +1,85 @@
+<div class="header">
+  <div style="display: flex;
+    font-size: 25px;
+    align-items: center;">
+    <img src="assets/images/left-icon.png" routerLink="/">
+  <ion-title> Verify your account</ion-title> 
+</div>
+ 
+</div>
+
+<div class="page">
+  <div class="container">
+ 
+  <p align="center">Code is sent to <b>{{verifyOtpForm.value.phoneNumber}}</b></p>
+</div>
+<div class="otp-form">
+  <input align="middle" #a  [(ngModel)]="numArray[0]" type="tel" placeholder="0" disabled>
+  <input align="middle" #b  [(ngModel)]="numArray['1']"  type="tel" placeholder="0" disabled>
+  <input align="middle" #b  [(ngModel)]="numArray['2']"  type="tel" placeholder="0" disabled>
+  <input align="middle" #b  [(ngModel)]="numArray['3']"  type="tel" placeholder="0" disabled>
+</div>
+<br>
+  <p align="center" style="margin-top:10px;font-size:13px">Didn't receive <b>OTP</b> to your mobile? <a (click)="resendOtp()" class="secondary-text">Resend OTP</a></p>
+  <br>
+  
+  <ion-grid text-center class="keypad">
+    <ion-row class="submit">
+      <button class="secondary-bg white-text full-button" (click)="submit(loginForm.value)">Verify and Create Account</button>
+
+    </ion-row>
+    <ion-row >
+      <ion-col>
+        <button ion-button round large outline  (click)="numbesubmit(1)">1</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round large outline  (click)="numbesubmit(2)">2</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round large outline  (click)="numbesubmit(3)">3</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button round large outline  (click)="numbesubmit(4)">4</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round large outline  (click)="numbesubmit(5)">5</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round large outline  (click)="numbesubmit(6)">6</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button round large outline  (click)="numbesubmit(7)">7</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round large outline  (click)="numbesubmit(8)">8</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round large outline  (click)="numbesubmit(9)">9</button>
+      </ion-col>
+    </ion-row>
+  
+  <ion-row>
+    <ion-col>
+      <button ion-button clear large no-padding  (click)="previous()">Prev</button>
+    </ion-col>
+    <ion-col>
+      <button ion-button round large outline  (click)="numbesubmit(0)">0</button>
+    </ion-col>
+    <ion-col>
+      <button ion-button clear no-padding   (click)="clear()">Clear</button>
+    </ion-col>
+  </ion-row>
+  
+ 
+  </ion-grid>
+</div>
+
+
+
+<!-- <button class="footer-button"   (click)="submit(verifyOtpForm.value)">Submit</button> -->
+
+

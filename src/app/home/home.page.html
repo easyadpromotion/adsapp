@@ -1,0 +1,114 @@
+<div class="header">
+  <div style="display: flex;
+    font-size: 25px;
+    align-items: baseline;justify-content: space-between;">
+    <p class="welcome-message" (click)="openMenu()">
+      <img *ngIf="(profilePic)" style="border-radius:30%;margin-right:5px" [src]="httpService.videoUrl+(profilePic)"  width="30%"> 
+      <span  *ngIf="!profilePic ||  profilePic.null" >
+      <ion-avatar slot="start">
+        <img src="assets/male.png" *ngIf="user&&user.gender=='Male'">
+        <img src="assets/female.png" *ngIf="user&&user.gender=='Female'">
+        <img src="assets/transgender.png" *ngIf="user&&user.gender=='Other'">
+      </ion-avatar>
+    </span> <span style="display: flex;flex-direction: column;"> <a style="color: #fff;font-size:16px;font-weight: bold;" *ngIf="user">{{user.name}}</a><a style="color: #fff;font-size:14px">{{userService.getUserLocation()}}</a></span> 
+  </p>
+    <ion-icon name="log-out" style="margin-right:10px;font-size: 35px;" (click)="logout()"></ion-icon>
+
+</div>
+
+
+
+
+<div class="profile">
+    
+  <div class="card" style="color:#000">
+    
+      <h2 style="margin-top:10px;"><ion-icon class="secondary-text"  name="wallet-outline"></ion-icon>&nbsp; Rs. {{userWAmount}}</h2>
+   
+    <hr>
+    <p routerLink="/how-to-earn">Want to  <b>&nbsp;earn&nbsp;</b>more points? <ion-icon name="chevron-forward-outline"  ></ion-icon></p>
+  
+  
+</div>
+
+
+</div>
+
+</div>
+
+<div class="page">
+  
+
+
+  <div class='container' >
+
+    <div class="card" routerLink="/photo-list">
+      
+      <ion-row>
+        <ion-col size="2" class="center">
+          <ion-icon class="secondary-text" name="images-outline"></ion-icon>
+        </ion-col>
+        <ion-col>
+          Frame Ads
+        </ion-col>
+        <ion-col size="2" class="center">
+          <ion-icon class="secondary-text" name="chevron-forward-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <!-- routerLink="/wallet-history-list" -->
+      
+     
+    </div>
+    <div class="card"  routerLink="/videos-list">
+      
+  <ion-row>
+    <ion-col size="2" class="center">
+      <ion-icon class="secondary-text" name="videocam-outline"></ion-icon>
+    </ion-col>
+    <ion-col>
+      Video Ads
+    </ion-col>
+    <ion-col size="2" class="center">
+      <ion-icon class="secondary-text" name="chevron-forward-outline"></ion-icon>
+    </ion-col>
+  </ion-row>
+      
+     
+     
+      
+    </div>
+    <div class="card" routerLink="/survey-list">
+    
+      <ion-row>
+        <ion-col size="2" class="center">
+          <ion-icon class="secondary-text" name="checkmark-done-outline"></ion-icon>
+        </ion-col>
+        <ion-col>
+          Survey Ads
+        </ion-col>
+        <ion-col size="2" class="center">
+          <ion-icon class="secondary-text" name="chevron-forward-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </div>
+
+  </div>
+ 
+
+  <div class='container' *ngIf="role == 'Franchise'">
+    <button class="secondary-bg full-button white-text" routerLink="/create-vendor-add">Create Vendor</button>
+    <br>
+    <button class="secondary-bg full-button white-text" routerLink="/create-vendor-list">Vendor List</button>
+  </div>
+  
+  <div class='container' *ngIf="role == 'Admin'">
+    <button class="secondary-bg full-button white-text" routerLink="/redeem-request-list">Redeem Request</button>
+    <br>
+  </div>
+  <br>
+  <ion-slides [options]="slideOptions" pager="true" #slider (ionSlidesDidLoad)="slidesDidLoad(slider)">
+    <ion-slide *ngFor="let img of data">
+      <img [src]="img">
+    </ion-slide>
+  </ion-slides>
+</div>

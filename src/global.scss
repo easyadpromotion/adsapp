@@ -24,3 +24,495 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+@import "./bootstrap.css";
+
+$black:#000;
+$grey:#eee;
+$danger:red;
+// $primary:#164573;
+// $secondary:#FF3162;
+$primary:#172b4c;
+$secondary:#e83646;
+$green:#87F57A;
+$page-background: $grey;
+$dark-text:$black;
+$form-bg:#ebf2ff;
+
+*{
+    font-family: 'Open Sans', sans-serif;
+}
+
+.primary-bg{
+    background: $primary !important;
+}
+
+.white-bg{
+    background:#fff !important;
+}
+
+.text-align-right{
+    text-align: right;
+}
+
+.full-width{
+    width:100%;
+}
+
+.white-text{
+    color:#fff !important
+}
+
+.button{
+    margin-bottom:5px;
+    padding:5px;
+    border-radius:5px;
+    min-width: 50px;
+    
+}
+
+.text-align-center{
+    text-align:center
+}
+
+.m-b-10{
+    margin-bottom:10px;
+}
+
+.full-button{
+        text-align: center;
+        width:100%;
+        padding: 8px;
+        border-radius:5px
+    
+}
+
+.danger-bg{
+    background: $danger !important;
+}
+
+.green-bg{
+    background: $green !important;
+}
+
+.secondary-bg{
+    background: $secondary !important;
+}
+
+.primary-text{
+    color:$primary !important;
+}
+
+.secondary-text{
+    color:$secondary !important;
+}
+
+::-webkit-input-placeholder { /* Edge */
+    color: #000;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #000;
+  }
+  
+  ::placeholder {
+    color: #000;
+  }
+
+.list-big-header{
+    height: 50px;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    top: 80px;
+    z-index: 9999;
+    padding-bottom:10px;
+    .input{
+        width: 100%;
+    border-radius: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    background:$form-bg;
+    /* margin-bottom: 0px; */
+    border: 0;
+    display: flex;
+        .icon {
+            padding: 10px;
+    background: white;
+    color: $secondary;
+    min-width: 50px;
+    text-align: center;
+          }
+        input{
+            width: 100%;
+            border-radius:0px;
+            margin-left:auto;
+            margin-right:auto;
+            margin-bottom:-10px;
+            border:0px;
+            background:$form-bg;
+        }
+    }
+    
+}
+
+.list{
+padding-top: 20px;
+margin-top: -75px;
+position: absolute;
+margin-left: -10px;
+padding: 10px;
+height:100vh;
+overflow-y: auto;
+padding-bottom:50px;
+
+}
+
+.admin-list{
+    padding-top: 20px;
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 105px !important;
+}
+
+.page{
+    background: #eee;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 10px;
+    margin-top: -10px;
+    // background: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding-top:30px;
+    padding-bottom:100px
+}
+
+.rounded-corner{
+    border-radius:10px;
+}
+
+label{
+    font-weight: 500;
+}
+
+.page-heading{
+    font-size:20px;
+    font-weight: 600;
+    margin-bottom:10px
+}
+.muted-label{
+    color:#C1C7D0
+}
+
+.form-control{
+    border: 1px solid #adadad;
+}
+
+.form{
+    .col-xs-12,.col-sm-6,.col-md-6{
+        margin-bottom:5px;
+        input{
+            background:$form-bg;
+            color:#000;
+        }
+    }
+    .col-xs-12{
+        width: 100%;
+    }
+    .invalid-data{
+        color:$danger
+    }
+}
+
+.footer-button{
+    background: $secondary;
+    padding: 10px;
+}
+
+.toolbar-container,toolbar-background, ion-header, ion-toolbar{
+    background: $danger;
+}
+
+.map {
+    height: 100%;
+  }
+
+  label{
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .form .col-xs-12 input, .form .col-sm-6 input, .form .col-md-6 input {
+    background: $form-bg;
+    color: #000;
+    font-size: 14px;
+}
+
+.upload-card{
+    border: 3px dotted #ccc;
+    height: 100px;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top:10px;
+    p{
+        margin:0
+    }
+    button{
+        border-radius:5px
+    }
+}
+
+.form-page{
+    .header{
+        height:85px !important
+    }
+}
+
+.form .col-xs-12 input, .form .col-sm-6 input, .form .col-md-6 textarea {
+    background: $form-bg;
+    color: #000;
+    font-size: 14px;
+}
+
+textarea,ion-datetime.form-control,.multiselect-dropdown,select {
+    background: $form-bg !important;
+    color: #000 !important;
+    font-size: 14px !important;
+}
+
+ion-title{
+    font-size:15px
+}
+
+.form-control {
+    border: 1px solid #cecece;
+}
+
+.header{
+    display: flex;
+    background: $primary;
+    color: #fff;
+    height: 120px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    padding-right: 8px; 
+    h5{
+        margin-top:10px
+    }
+    .fa-arrow-left{
+        margin-top:7px
+    }
+}
+
+ion-title{
+    text-transform: capitalize;
+}
+
+.list{
+    padding-top:20px;
+    .card{
+        margin-top:10px;
+    }
+    .card-body{
+        h2{
+            border-bottom:2px solid $grey;
+            padding:5px;
+            padding-left: 0px;
+            font-weight:bold
+        }
+        padding: 10px;
+        .fa{
+            font-size:30px
+        }
+    }
+}
+
+.image-list{
+    text-align: center;
+    .col-sm-3,.col-xs-4{ 
+        width:50%;
+        margin-bottom:10px;
+        .success-status{
+            background-color:$green;
+            color:#fff;
+        }
+        .muted-status{
+            background:#adb5bd;
+            color:#fff;
+        }
+        .danger-status{
+            background:$danger;
+            color:#fff
+        }
+        .card{
+            border:2px solid $grey;
+        }
+        .card-body{
+            border-top:2px solid $grey;
+            padding:2px
+        }
+
+        .add-card{
+            .add-icon{
+                width:100%;
+                height:57px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color:$secondary
+            }
+        }
+    }
+}
+
+.flex-vert-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.huge-details{
+    border:1px solid $grey;
+    padding-bottom:0px;
+    padding-top:10px;
+    label,span{
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .col-xs-12{
+        border-bottom:2px solid $grey;
+        // padding-bottom:5px;
+        // margin-bottom:5px;
+        padding-top:10px;
+    }
+    .no-border-bottom{
+        border-bottom:0px !important;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+.no-border-bottom{
+    border-bottom:0px !important
+}
+
+.action-buttons{
+    text-align: right;
+    margin-top:5px;
+    span{
+        margin-left:10px;
+    }
+    .fa{
+        margin-right:2px;
+    }
+}
+
+.header-title{
+    display: flex;
+    font-size: 25px;
+    align-items: center;
+}
+
+.form-page{
+    padding-top:unset;
+}
+
+
+
+.list {
+    padding-top: 20px;
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 90px;
+}
+
+.details-header{
+    display: block !important;
+    .action-buttons{
+        font-size:15px;
+    }
+}
+
+.options{
+    margin-top:30px;
+    label{
+        display: inline-block;
+        width: 100%;
+        background: #eee;
+        padding: 10px;
+        margin-bottom:15px;
+    }
+    label.card.active {
+        background: $secondary !important;
+        color: #fff;
+    }
+    input{
+        visibility: hidden;
+    }
+}
+
+ion-fab {
+    position: fixed;
+}
+
+.view-list{
+    ion-grid{
+    background: #fff;
+    border-radius:30px;
+    margin-bottom:20px;
+    button{
+        width:100%;
+        background: #fff;
+       border-radius: 30px;
+       height:35px
+    }
+    .active{
+        background:$secondary;
+        color:#fff
+    }
+    ion-row{
+        padding:0px;
+    }
+}
+
+}
+
+.menu-content-open{
+    pointer-events: unset !important;
+}
+
+.bottom-bar{
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    color: #fff;
+    font-size: 30px;
+    z-index: 999;
+    padding: 0px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    background: $primary    ;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 5px;
+    div{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+        padding-top:5px;
+    }
+  p{
+      font-size:12px;
+      margin:0;
+      margin-top:2px
+  }
+}

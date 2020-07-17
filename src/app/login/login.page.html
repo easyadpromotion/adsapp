@@ -1,0 +1,107 @@
+<!-- <ion-header>
+    <ion-toolbar>
+      <ion-title>
+       AGM Demo - Ionic 4
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <agm-map
+     [style.height.px]="height"
+     [latitude]="lat"
+     [longitude]="lng">
+       <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    </agm-map>
+  </ion-content> -->
+
+  <div class="header">
+    <div class="logo">
+      <img src="assets/icon.png" width="100%">
+    </div>
+     <!-- <div>
+        <h3>EAP</h3>
+        <p>Easy ads promotion</p>
+    </div> -->
+  </div>
+  
+  <div class="page">
+    <div class='container'>
+      <h4 style="font-weight: bold;">Welcome <span>EAP</span></h4>
+    <h6>Sign in to promote your ads with ease.</h6>
+   <br>
+    <div class="form" [formGroup]="loginForm">
+      <div class="">
+      <div class="col-xs-12">
+        <label>Mobile Number</label>
+        <input class="form-control" formControlName="username" type="number" placeholder="Enter your 10 digit mobile number">
+        <small class="form-text text-muted invalid-data"
+        *ngIf="loginForm.controls['username'].invalid && (loginForm.controls['username'].dirty || loginForm.controls['username'].touched)"
+        class="invalid-data">
+        Please enter valid mobile number          </small>
+      </div>
+      
+      <div class="col-xs-12">
+        <label>Password</label>
+        <input type="password" class="form-control" formControlName="password" placeholder="Enter Password">
+        <small class="form-text text-muted invalid-data"
+        *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)"
+        class="invalid-data">
+        Please enter password         </small>   
+       </div>
+      <div class="col-xs-12" style="text-align:right">
+        <a class="secondary-text pull-right bottom-text" routerLink="/forgot-password">Forgot Password?</a><br>
+        
+      </div>
+      <div class="col-xs-12">
+        <button class="secondary-bg white-text full-button" (click)="submit(loginForm.value)">Sign in</button>
+      </div>
+      <p class="bottom-text" align="center">Don't have an account?<a class="secondary-text" routerLink="/register"> Signup?</a></p>
+    </div>
+    </div>
+    </div>
+    
+  </div>
+  <!-- 
+  
+  <div class="page">
+    <div class="page-heading">Add Details</div>
+    <div [formGroup]="cityForm" class="form card">
+      <div class="card-body">
+        <div class="row">
+                  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>state Id</label>
+            <input class="form-control" formControlName="stateId" placeholder="Enter state Id">
+            <small class="form-text text-muted invalid-data"
+              *ngIf="cityForm.controls['stateId'].invalid && (cityForm.controls['stateId'].dirty || cityForm.controls['stateId'].touched)"
+              class="invalid-data">
+              Please enter state id          </small>
+          </div>
+  
+                  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Name</label>
+            <input class="form-control" formControlName="name" placeholder="Enter Name">
+            <small class="form-text text-muted invalid-data"
+              *ngIf="cityForm.controls['name'].invalid && (cityForm.controls['name'].dirty || cityForm.controls['name'].touched)"
+              class="invalid-data">
+              Please enter name          </small>
+          </div>
+  
+                  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Is Available</label>
+            <input class="form-control" formControlName="isAvailable" placeholder="Enter Is Available">
+            <small class="form-text text-muted invalid-data"
+              *ngIf="cityForm.controls['isAvailable'].invalid && (cityForm.controls['isAvailable'].dirty || cityForm.controls['isAvailable'].touched)"
+              class="invalid-data">
+              Please enter is available          </small>
+          </div>
+  
+          
+        </div>
+      </div>
+    </div>
+  </div>
+   -->
+  

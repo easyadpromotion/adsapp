@@ -1,0 +1,49 @@
+.col-xs-12{
+  margin-bottom:15px;
+}
+
+
+.page{
+  background:#fff !important
+}
+
+.header{
+  text-align: center;
+  h3{
+      font-weight:700px;
+      margin-top:5px
+  }
+  p{
+      font-size: 13px;
+  color: #e4dfdf;
+  }
+  .logo{
+      width:120px;
+      height:100px;
+      padding:10px;
+      border-radius:5px;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      margin-bottom:20px;
+  }
+}
+
+.bottom-text{
+  font-size:15px
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  background: #172b4c;
+  color: #fff;
+  height: 170px;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  padding: 20px;
+  /* padding-right: 8px; */
+  justify-content: center;
+  padding-top:30px;
+  line-height: 1em;
+}

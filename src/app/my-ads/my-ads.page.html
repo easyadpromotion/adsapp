@@ -1,0 +1,112 @@
+<div class="header">
+  <div style="display: flex;
+    font-size: 25px;
+    align-items: center;">
+   <img src="assets/images/align-left.png" (click)="openMenu()"> 
+  <ion-title> My Dashboard </ion-title> 
+</div>
+  
+</div>
+
+<div class="page">
+  <div class="card rounded-corner" routerLink="/create-photo-frame-list">
+ 
+      <div class="card-body">
+        <div class="container">
+         
+      <div class="row">
+        <div class="col-12">
+          <h5>Frame Ads</h5>
+          <p>Here u can see list of photo ads</p>
+          <!-- <p>{{json.length}}</p> -->
+        </div>
+        <!-- <div class="col-4">			
+          <p style="text-align:right;"><span class="secondary-text" style="text-align: center;display: inline-block; font-size:48px;" class="fa fa-play-circle secondary-text" aria-hidden="true"></span></p>
+        </div> -->
+      </div>
+    
+    </div>
+    
+  </div><div class="card-footer">
+      <div class="row">
+        <div class="col-6">
+          
+          <p><i class="fa fa-users secondary-text" style="font-size:15px;"></i>{{getTotalUsers(photojson)}}</p>
+        </div>
+        <div class="col-6 right" style="justify-content: flex-end !important">
+          <p style="text-align:right;" ><i class="fa fa-money secondary-text" style="font-size:15px;"></i> Rs {{getTotalAmount(photojson)}}<p>
+        </div>
+      </div>
+      
+    </div>
+
+  
+  </div> 
+  <div class="card rounded-corner" routerLink="/create-video-list">
+ 
+    <div class="card-body">
+      <div class="container">
+       
+    <div class="row">
+      <div class="col-12">
+        <h5>Video Ads</h5>
+        <p>Here u can see list of video ads</p>
+        <!-- <p>{{json.length}}</p> -->
+      </div>
+      <!-- <div class="col-4">			
+        <p style="text-align:right;"><span class="secondary-text" style="text-align: center;display: inline-block; font-size:48px;" class="fa fa-play-circle secondary-text" aria-hidden="true"></span></p>
+      </div> -->
+    </div>
+  
+  </div>
+  
+</div><div class="card-footer">
+    <div class="row">
+      <div class="col-6">
+        
+        <p><i class="fa fa-users secondary-text" style="font-size:15px;"></i>{{getTotalUsers(videosjson)}}</p>
+      </div>
+      <div class="col-6 right" style="justify-content: flex-end !important">
+        <p style="text-align:right;" ><i class="fa fa-money secondary-text" style="font-size:15px;"></i> Rs {{getTotalAmount(videosjson)}}<p>
+      </div>
+    </div>
+    
+  </div>
+
+
+</div> 
+<div class="card rounded-corner" routerLink="/survey-questions-list" >
+ 
+  <div class="card-body">
+    <div class="container">
+     
+  <div class="row">
+    <div class="col-12">
+      <h5>Survey Ads</h5>
+      <p>Here u can see list of survey ads</p>
+      <!-- <p>{{json.length}}</p> -->
+    </div>
+    <!-- <div class="col-4">			
+      <p style="text-align:right;"><span class="secondary-text" style="text-align: center;display: inline-block; font-size:48px;" class="fa fa-play-circle secondary-text" aria-hidden="true"></span></p>
+    </div> -->
+  </div>
+
+</div>
+
+</div><div class="card-footer">
+  <div class="row">
+    <div class="col-6">
+      
+      <p><i class="fa fa-users secondary-text" style="font-size:15px;"></i>{{getTotalUsers(surveyjson)}}</p>
+    </div>
+    <div class="col-6 right" style="justify-content: flex-end !important">
+      <p style="text-align:right;" ><i class="fa fa-money secondary-text" style="font-size:15px;"></i> Rs {{getTotalAmount(surveyjson)}}<p>
+    </div>
+  </div>
+  
+</div>
+
+
+</div> 
+  
+</div>

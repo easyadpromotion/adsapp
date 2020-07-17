@@ -1,0 +1,227 @@
+<div class="header">
+  <div style="display: flex;
+    font-size: 25px;
+    align-items: center;">
+    <img src="assets/images/left-icon.png" routerLink="/">
+  <ion-title> </ion-title> 
+</div>
+  <div><h5>Registration</h5>
+  </div>
+</div>
+
+<div class="page">
+  <div [formGroup]="registrationForm" class="form card">
+    <div class="card-body">
+      <div class="row">
+                
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Full Name *</label>
+          <input class="form-control" formControlName="name" placeholder="Enter Name">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['name'].invalid && (registrationForm.controls['name'].dirty || registrationForm.controls['name'].touched)"
+            class="invalid-data">
+            Please enter name          </small>
+        </div>
+
+                
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Phone Number *</label>
+          <input class="form-control" formControlName="phoneNumber" type="number" placeholder="Enter Phone Number">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['phoneNumber'].invalid && (registrationForm.controls['phoneNumber'].dirty || registrationForm.controls['phoneNumber'].touched)"
+            class="invalid-data">
+            Please enter phone number          </small>
+        </div>
+
+                
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Email ID</label>
+          <input class="form-control" formControlName="emailAddress" placeholder="Enter Email ID">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['emailAddress'].invalid && (registrationForm.controls['emailAddress'].dirty || registrationForm.controls['emailAddress'].touched)"
+            class="invalid-data">
+            Please enter email id          </small>
+        </div>
+
+                
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Gender *</label>
+         <!-- <input class="form-control" formControlName="gender" placeholder="Enter Gender">-->
+          <select class="form-control"  formControlName="gender" placeholder="Enter Gender">
+            <option value="">Select Gender</option>
+            <option *ngFor="let items of gender" [value]="items['name']">{{items['name']}}</option>
+          </select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['gender'].invalid && (registrationForm.controls['gender'].dirty || registrationForm.controls['gender'].touched)"
+            class="invalid-data">
+            Please enter gender          </small>
+        </div>
+
+                
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Education Qualification *</label>
+      <!--    <input class="form-control" formControlName="educationQualification" placeholder="Enter Education Qualification">-->
+          <select class='form-control' formControlName="educationQualification" placeholder="Enter Education Qualification">
+            <option value="">Select  Education Qualification</option>
+            <option *ngFor="let items of educationQualifications" [value]="items['name']">{{items['name']}}</option></select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['educationQualification'].invalid && (registrationForm.controls['educationQualification'].dirty || registrationForm.controls['educationQualification'].touched)"
+            class="invalid-data">
+            Please enter education qualification          </small>
+        </div>
+
+       
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Profession *</label>
+          <select class='form-control' formControlName="profession" placeholder="Enter Profession">
+            <option value="">Select  Profession</option>
+            <option *ngFor="let item of professions" [value]="item">{{item}}</option></select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['profession'].invalid && (registrationForm.controls['profession'].dirty || registrationForm.controls['profession'].touched)"
+            class="invalid-data">
+            Please enter Profession          </small>
+        </div> 
+                
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Date Of Birth *</label>
+          <ion-datetime  displayFormat="DD/MM/YYYY" placeholder="Enter Date of birth" formControlName="dateOfBirth"  class="form-control"></ion-datetime>
+          
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['dateOfBirth'].invalid && (registrationForm.controls['dateOfBirth'].dirty || registrationForm.controls['dateOfBirth'].touched)"
+            class="invalid-data">
+            Please enter date of birth          </small>
+        </div>
+
+                
+    
+                
+        <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Address</label>
+          <input class="form-control" formControlName="address" placeholder="Enter Address">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['address'].invalid && (registrationForm.controls['address'].dirty || registrationForm.controls['address'].touched)"
+            class="invalid-data">
+            Please enter address          </small>
+        </div> -->
+
+                    
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Password *</label>
+          <input class="form-control" type="password" formControlName="password" placeholder="min 6 characters">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['password'].invalid && (registrationForm.controls['password'].dirty || registrationForm.controls['password'].touched)"
+            class="invalid-data">
+            Please enter password(min 6 characters)          </small>
+        </div>          
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Referral Code</label>
+          <input class="form-control"  formControlName="referralCode" placeholder="Enter Referral Code">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['referralCode'].invalid && (registrationForm.controls['referralCode'].dirty || registrationForm.controls['referralCode'].touched)"
+            class="invalid-data">
+            Please enter Referral Code          </small>
+        </div>  
+
+     
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Upload Profile Picture</label>
+          <input class="form-control" type="file" (change)="onFileChange($event)" placeholder="Enter Photo Url">
+         
+         
+        </div>
+
+        <div class="col-xs-12 col-md-6 col-sm-6" *ngIf="createPhotoFrame">
+        
+          <img id="borderimg1"  [ngStyle]="{'border-image': 'url('+httpService.serverUrl+'frames/'+createPhotoFrame.value.photoFrame+') 30 round'}"  class="card-img-top" width="100%" [src]="httpService.imageUrl+getSplittedname(createPhotoFrame.value.profilePic)" alt="Card image cap">
+          <!-- <small class="form-text text-muted invalid-data"
+          *ngIf="registrationForm.controls['profilePic'].invalid && (registrationForm.controls['profilePic'].dirty || registrationForm.controls['profilePic'].touched)"
+          class="invalid-data">
+          Please enter Referral Code          </small> -->
+        </div>
+
+                
+      <!--  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Franchise Id</label>
+        
+          <select class="form-control" formControlName="franchiseId" placeholder="Enter Franchise Id">
+            <option value="">Select Franchise ID</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['franchiseId'].invalid && (registrationForm.controls['franchiseId'].dirty || registrationForm.controls['franchiseId'].touched)"
+            class="invalid-data">
+            Please enter franchise id          </small>
+        </div>
+
+                
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Is Franchise</label>
+          <select class="form-control"  formControlName="isFranchise" placeholder="Enter Is Franchise">
+            <option value="">Select Is Franchise</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['isFranchise'].invalid && (registrationForm.controls['isFranchise'].dirty || registrationForm.controls['isFranchise'].touched)"
+            class="invalid-data">
+            Please enter is franchise          </small>
+        </div>
+
+                
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Is Available</label>
+  
+          <select class="form-control" formControlName="isAvailable" placeholder="Enter Is Available">
+            <option value="">Select Is Available</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['isAvailable'].invalid && (registrationForm.controls['isAvailable'].dirty || registrationForm.controls['isAvailable'].touched)"
+            class="invalid-data">
+            Please enter is available          </small>
+        </div>
+
+                
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Is User</label>
+       
+          <select class="form-control" formControlName="isUser" placeholder="Enter Is User">
+            <option value="">Select Is User</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['isUser'].invalid && (registrationForm.controls['isUser'].dirty || registrationForm.controls['isUser'].touched)"
+            class="invalid-data">
+            Please enter is user          </small>
+        </div>
+
+       <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Otp</label>
+          <input class="form-control" formControlName="otp" placeholder="Enter Otp">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['otp'].invalid && (registrationForm.controls['otp'].dirty || registrationForm.controls['otp'].touched)"
+            class="invalid-data">
+            Please enter otp          </small>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Otp Verified</label>
+          <input class="form-control" formControlName="otpVerified" placeholder="Enter Otp Verified">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="registrationForm.controls['otpVerified'].invalid && (registrationForm.controls['otpVerified'].dirty || registrationForm.controls['otpVerified'].touched)"
+            class="invalid-data">
+            Please enter otp verified   [disabled]="!registrationForm.valid"       </small>
+        </div>-->
+
+  
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="footer-button"     (click)="submit(registrationForm.value)">Submit</button>
+
+
