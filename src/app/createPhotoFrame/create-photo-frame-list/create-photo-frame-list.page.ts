@@ -8,6 +8,8 @@ import { LoaderService } from 'src/app/loader.service';
 import { UtilService } from 'src/app/util.service';
 import { MenuController } from '@ionic/angular';
 import * as moment from 'moment';
+import { FirebaseDbService } from 'src/app/firebase-db.service';
+import { UserService } from 'src/app/user.service';
 
 @Component({
   selector: 'app-createPhotoFrame-list',
@@ -20,6 +22,7 @@ export class CreatePhotoFrameListPage implements OnInit {
   userDetails
   constructor(private router: Router, public loadingCtrl: LoadingController,
     public httpService: HttpServiceService, public alertService: AlertService,
+    public firebase:FirebaseDbService,public userService:UserService,
     public loaderService: LoaderService,public utilService:UtilService, public menuCtrl:MenuController) {
       this.userDetails = JSON.parse(localStorage.getItem('userData'))
   }
@@ -31,28 +34,25 @@ export class CreatePhotoFrameListPage implements OnInit {
 
   loadData(){
     this.loaderService.showLoader('Fetching details, please wait').then(()=>{
-      try{
-        this.httpService.postApi({userId:this.userDetails[0]['_id']},'createPhotoFrame/getByCondition').subscribe((res: any) => {
-          console.log(res)
-          
-          this.json = res.data;
-          this.json.reverse()
-          this.json.forEach(element => {
-            var now = moment(new Date(element.startDate)); //todays date
-var end = moment(new Date(element.endDate)); // another date
-var duration = moment.duration(end.diff(now));
-var days = duration.asHours();
-            element.diff=days.toFixed(2);
-          });
-          this.loaderService.hideLoader();
-         },(err)=>{
-          
-          this.loaderService.hideLoader();
-          this.alertService.presentNetworkAlert();
-         });
-      }catch(e){
-        this.loaderService.hideLoader();
-      }
+      let fb=this.firebase.getDb().collection('photoads', ref =>
+      ref.where('userId', '==', this.userService.getUserId())
+    ).snapshotChanges().subscribe(res=>{
+      this.json=[];
+      res.forEach(item=>{
+        let json=item.payload.doc.data();
+            var now = moment(new Date(json['startDate'])); //todays date
+            var end = moment(new Date(json['endDate'])); // another date
+            var duration = moment.duration(end.diff(now));
+            var days = duration.asHours();
+            json['diff']=days.toFixed(2);
+            json['id']=item.payload.doc.id;
+            this.json.push(json);
+      })
+      this.json.reverse();
+      this.loaderService.hideLoader();
+      
+      console.log(res)
+    })
    
     });
   }
@@ -60,12 +60,14 @@ var days = duration.asHours();
   ionViewWillEnter(){
     localStorage.removeItem('form');
     localStorage.removeItem('address');
+    localStorage.removeItem('questions');
     this.loadData();
   }
 
-  ngOnInit() { this.loaderService.hideLoader();
-    
+  ngOnInit() { 
+
   }
+
   add() {
     this.router.navigate(['/create-photo-frame-add'])
   }

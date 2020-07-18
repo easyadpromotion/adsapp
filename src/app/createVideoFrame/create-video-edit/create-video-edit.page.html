@@ -1,0 +1,170 @@
+<div class="form-page">
+
+  <div class="header">
+    <div class="header-title">
+      <img src="assets/images/left-icon.png" (click)="clearData()" >
+      <ion-title> Update Video Ad </ion-title>
+    </div>
+  </div>
+  
+  <div class="page white-bg form-page">
+    <div [formGroup]="createVideoForm" class="form">
+      <div class="card-body">
+        <div class="row">
+  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            
+            <label>Name of Video *</label>
+            
+            <input class="form-control" formControlName="name" placeholder="Enter Name of Video">
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createVideoForm.controls['name'].invalid && (createVideoForm.controls['name'].dirty || createVideoForm.controls['name'].touched)"
+              class="invalid-data">
+              Please enter name of video</small>
+          </div>
+  
+  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Description *</label>
+            <textarea rows="4" cols="50" class="form-control" formControlName="description" placeholder="Enter Description"></textarea>
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createVideoForm.controls['description'].invalid && (createVideoForm.controls['description'].dirty || createVideoForm.controls['description'].touched)"
+              class="invalid-data">
+              Please enter description </small>
+          </div>
+  
+          <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Enter Length of Video In Seconds *</label>
+            <input  class="form-control" (ngModelChange)=targetChange(this.createVideoForm.value.targetCount) formControlName="seconds" type="number"  placeholder="Enter time in seconds">
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createVideoForm.controls['seconds'].invalid && (createVideoForm.controls['seconds'].dirty || createVideoForm.controls['seconds'].touched)"
+              class="invalid-data">
+              Please enter seconds</small>
+          </div> -->
+  
+          <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Target Count *</label>
+            <input class="form-control" formControlName="targetCount" type="number" placeholder="Enter Target Count" (ngModelChange)=targetChange(this.createVideoForm.value.targetCount)>
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createVideoForm.controls['targetCount'].invalid && (createVideoForm.controls['targetCount'].dirty || createVideoForm.controls['targetCount'].touched)"
+              class="invalid-data">
+              Please enter target count</small>
+          </div> -->
+  
+          
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Target Gender *</label>
+            <ng-multiselect-dropdown
+    [placeholder]="'Select Target Gender'"
+    [data]="gender"
+    formControlName="targetType"
+    [settings]="dropdownSettings"
+  >
+  </ng-multiselect-dropdown>
+  <!-- <small class="form-text text-muted invalid-data"
+  *ngIf="createVideoForm.controls['targetType'].invalid && (createVideoForm.controls['targetType'].dirty || createVideoForm.controls['targetType'].touched)"
+  class="invalid-data">
+  Please select target Gender</small> -->
+  
+          </div>
+   
+          <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Target Type</label>
+            <ng-multiselect-dropdown
+    [placeholder]="'Select Target Type'"
+    [data]="types"
+    formControlName="targetType"
+    [settings]="dropdownSettings"
+  >
+  </ng-multiselect-dropdown>
+             
+          </div>
+  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Target Age</label>
+          
+            <ng-multiselect-dropdown
+    [placeholder]="'Select Target Age'"
+    [data]="ages"
+    formControlName="targetAge"
+    [settings]="dropdownSettings"
+  >
+  </ng-multiselect-dropdown>
+            
+          
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createVideoForm.controls['targetAge'].invalid && (createVideoForm.controls['targetAge'].dirty || createVideoForm.controls['targetAge'].touched)"
+              class="invalid-data">
+              Please select target Age</small>
+          </div> -->
+  
+          <!-- <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Amount(In Rs.)</label>
+            <input disabled class="form-control" formControlName="amount" type="number" placeholder="Enter Amount">
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createVideoForm.controls['amount'].invalid && (createVideoForm.controls['amount'].dirty || createVideoForm.controls['amount'].touched)"
+              class="invalid-data">
+              Please enter amount </small>
+          </div> -->
+  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Category *</label>
+            
+            <select class="form-control" formControlName="category" placeholder="Enter Category">
+              <option value="">Select Category</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Individual">Individual</option>
+            </select>
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createVideoForm.controls['category'].invalid && (createVideoForm.controls['category'].dirty || createVideoForm.controls['category'].touched)"
+              class="invalid-data">
+              Please enter category          </small>
+          </div>
+          
+  
+         
+  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Start Date *</label>
+            <ion-datetime  displayFormat="DD/MM/YYYY" placeholder="Enter Start Date" formControlName="startDate"  class="form-control"></ion-datetime>
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createVideoForm.controls['startDate'].invalid && (createVideoForm.controls['startDate'].dirty || createVideoForm.controls['startDate'].touched)"
+              class="invalid-data">
+              Please enter start date </small>
+          </div>
+  
+  
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>End Date *</label>
+            <ion-datetime  displayFormat="DD/MM/YYYY" placeholder="Enter End Date" formControlName="endDate"  class="form-control"></ion-datetime>
+            <small class="form-text text-muted invalid-data"
+              *ngIf="createVideoForm.controls['endDate'].invalid && (createVideoForm.controls['endDate'].dirty || createVideoForm.controls['endDate'].touched)"
+              class="invalid-data">
+              Please enter end date </small>
+          </div>
+          
+          <div class="col-xs-12 col-sm-6 col-md-6 " >
+            <div class="upload-card" >
+              <p *ngIf="createVideoForm.value.locality">{{createVideoForm.value.locality.address}}</p>
+              <button (click)="getLocality()" style="background: #FF3162;color:#fff;padding:5px;margin:10px;float:right">Pin Locality *</button>
+            </div>
+            <small class="form-text text-muted invalid-data"
+            *ngIf="createVideoForm.controls['locality'].invalid && (createVideoForm.controls['locality'].dirty || createVideoForm.controls['locality'].touched)"
+            class="invalid-data">
+            Please select Locality</small>
+           
+          </div>
+          
+          <div style="text-align: right;width: 100%;" >
+            
+          </div>
+        </div>
+      </div>
+      <button  class="footer-button white-text"   (click)="submit(createVideoForm.value)">
+       Submit
+       </button>
+    </div>
+   
+  </div>
+  
+  </div>

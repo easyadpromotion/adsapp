@@ -1,0 +1,60 @@
+
+
+<div class="header">
+  <div class="header-title">
+    <img src="assets/images/left-icon.png" routerLink="/my-ads">
+  <ion-title>Survey Ads List </ion-title> 
+</div>
+</div>
+
+<div class=" list-big-header">
+  <div class="input">
+   
+  <input class="form-control" placeholder="Search survey by name" [(ngModel)]="searchTitle">
+  <i class="fa fa-search icon"></i>
+  </div>
+</div>
+
+<div class="page list admin-list" >
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" routerLink="/survey-questions-add">
+    <ion-fab-button>
+      <ion-icon name="add" ></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="card rounded-corner" *ngFor="let item of json | filter:searchTitle;let index=index" (click)="view(item)">
+   
+    <div class="card-body">
+      <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <h5>{{item.name}}</h5>
+        
+      </div>
+      <div class="col-4">			
+ 
+      </div>
+    </div> 
+    
+    <div class="row">
+      <div class="col-6">
+        <p><i class="fa fa-history secondary-text" style="font-size:20px;"></i>{{item.diff}}</p>
+      </div>
+      <div class="col-6">
+        <p style="text-align:right;"><i class="fa fa-folder secondary-text" style="font-size:20px;"></i> #{{index+1}}<p>
+      </div>
+    </div>
+    
+  </div>
+    </div>
+  </div> 
+
+</div>
+
+
+ 
+ 
+
+
+ 
+ 

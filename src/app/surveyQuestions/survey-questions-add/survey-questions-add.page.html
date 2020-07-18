@@ -1,0 +1,175 @@
+<div class="form-page">
+
+<div class="header">
+  <div class="header-title">
+    <img src="assets/images/left-icon.png" (click)="clearData()" routerLink="/survey-questions-list">
+    <ion-title>Create Survey Ad </ion-title>
+  </div>
+</div>
+
+
+<div class="page white-bg form-page">
+  <div [formGroup]="surveyQuestionsForm" class="form">
+    <div class="card-body">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Name Of Survey *</label>
+          <input class="form-control" formControlName="name" placeholder="Enter Name of Survey">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['name'].invalid && (surveyQuestionsForm.controls['name'].dirty || surveyQuestionsForm.controls['name'].touched)"
+            class="invalid-data">
+            Please enter name of survey</small>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Description *</label>
+          <textarea rows="4" cols="50" class="form-control" formControlName="description" placeholder="Enter Description"></textarea>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['description'].invalid && (surveyQuestionsForm.controls['description'].dirty || surveyQuestionsForm.controls['description'].touched)"
+            class="invalid-data">
+            Please enter description </small>
+        </div>
+
+       <!-- <label>Target</label> -->
+
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Target Count *</label>
+          <input class="form-control" formControlName="targetCount" type="number" placeholder="Enter Target Count" (ngModelChange)=targetChange(this.surveyQuestionsForm.value.targetCount)>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['targetCount'].invalid && (surveyQuestionsForm.controls['targetCount'].dirty || surveyQuestionsForm.controls['targetCount'].touched)"
+            class="invalid-data">
+            Please enter target count</small>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Target Gender *</label>
+          <ion-grid>
+            <ion-row class="gender">
+              <ion-col  *ngFor="let gender of gender" (click)="toggleGender(gender)">
+                <button [class]="gender.selected?'btn btn-success':'btn btn-primary'"> 
+                  <i *ngIf="gender.selected" class="fa fa-check white-text"></i>
+                   {{gender.name}}</button>
+              </ion-col>
+            </ion-row>
+          </ion-grid> 
+      
+        </div>
+
+        
+
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Category </label>
+          
+          <select class="form-control" formControlName="category" placeholder="Enter Category">
+            <option value="">Select Category</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Individual">Individual</option>
+          </select>
+         
+        </div>
+
+
+       
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Start Date *</label>
+          <ion-datetime  displayFormat="DD/MM/YYYY" placeholder="Enter Start Date" formControlName="startDate"  class="form-control"></ion-datetime>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['startDate'].invalid && (surveyQuestionsForm.controls['startDate'].dirty || surveyQuestionsForm.controls['startDate'].touched)"
+            class="invalid-data">
+            Please enter start date </small>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>End Date *</label>
+          <ion-datetime  displayFormat="DD/MM/YYYY" placeholder="Enter Start Date" formControlName="endDate"  class="form-control"></ion-datetime>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['endDate'].invalid && (surveyQuestionsForm.controls['endDate'].dirty || surveyQuestionsForm.controls['endDate'].touched)"
+            class="invalid-data">
+            Please enter end date </small>
+        </div>
+
+        
+        <div class="col-xs-12 col-sm-6 col-md-6 " >
+          <div class="upload-card" >
+            <p *ngIf="surveyQuestionsForm.value.locality">{{surveyQuestionsForm.value.locality.address}}</p>
+            <button (click)="getLocality()" style="background: #FF3162;color:#fff;padding:5px;margin:10px;float:right">Pin Locality *</button>
+          </div>
+        
+          <small class="form-text text-muted invalid-data"
+          *ngIf="surveyQuestionsForm.controls['locality'].invalid && (surveyQuestionsForm.controls['locality'].dirty || surveyQuestionsForm.controls['locality'].touched)"
+          class="invalid-data">
+          Please enter Locality </small>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+ <!-- questions section start -->
+ <div >
+  <div style="margin-bottom:10px" class="section-wrapper container" *ngFor="let question of questions;let i = index;">
+    <ion-row>
+      <ion-col size="2">
+        <label class="section-title">Q #{{i + 1}}
+        </label>
+        </ion-col>
+        <ion-col>
+          <button aria-hidden="false" class="material-icons pull-right primary-text hover-icon"
+          style="cursor:pointer" (click)="addQuestion()"><i class="fa fa-plus-circle secondary-text"></i> Add
+</button>
+<button aria-hidden="false" *ngIf="questions.length>1"
+          class="material-icons pull-right primary-text hover-icon" style="cursor:pointer"
+          (click)="deleteQuestion(i)"><i class="fa fa-minus-circle secondary-text"></i> Remove
+</button>
+        </ion-col>
+    </ion-row>
+    
+    <!-- question details part-->
+    <div class="form-layout">
+      <ul style="color: red;">
+        <li *ngFor="let error of question.errors">{{error}}</li>
+      </ul>
+      <div class="row mg-b-25">
+        <div class="col-lg-6">
+          <label class="form-control-label">Question: <span class="tx-danger">*</span></label>
+          <div class="form-layout">
+            <input class="form-control" placeholder="What your question?" type="text" [(ngModel)]="question.Title">
+          </div>
+
+        </div>
+        <!-- col-4 -->
+      
+        <!-- col-4 -->
+      </div>
+      <!-- row -->
+    </div>
+
+    <!-- response section starts here -->
+
+    <!-- radio style starts here -->
+    <div style="width:100%;margin-left:15px;">
+      <div>
+        <div class="row" *ngIf="question.ResponseType=='radio'">
+          <div class="col-xs-12 mg-t-20 mg-lg-t-0" *ngFor="let tag of question.radio;let i=index">
+            <span style="display: flex;align-items:center"> 
+              <!-- <input name="rdio" type="radio" > -->
+              <span><input style="font-size:13px" class="form-control" placeholder="Enter Option" [(ngModel)]="question.radio[i].radio" class="radio-input"></span>
+              <button aria-hidden="false" *ngIf="i==question.radio.length-1 && question.radio.length<5"
+                        class="material-icons primary-text hover-icon" style="cursor:pointer;margin-left:20px;"
+                        (click)="addRadio(question.radio)"><i class="fa fa-plus-circle secondary-text"></i> Add
+            </button>
+          </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>   
+
+</div>
+<!-- questions part end -->
+<button class="footer-button white-text"   (click)="submit(surveyQuestionsForm.value)">
+  Pay {{Pamount1}}
+ </button>
+</div>
+
+</div>

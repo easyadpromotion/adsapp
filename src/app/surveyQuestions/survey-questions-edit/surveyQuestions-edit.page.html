@@ -1,0 +1,116 @@
+
+
+
+<div class="header">
+  <div class="header-title">
+    <img src="assets/images/left-icon.png" routerLink="/survey-questions-list">
+    <ion-title> surveyQuestions Update </ion-title> 
+  </div>
+</div>
+
+<div class="page white-bg form-page">
+  <div [formGroup]="surveyQuestionsForm" class="form">
+    <div class="card-body">
+      <div class="row">
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Name</label>
+          <input class="form-control" formControlName="name" placeholder="Enter Name">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['name'].invalid && (surveyQuestionsForm.controls['name'].dirty || surveyQuestionsForm.controls['name'].touched)"
+            class="invalid-data">
+            Please enter name          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Description</label>
+          <input class="form-control" formControlName="description" placeholder="Enter Description">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['description'].invalid && (surveyQuestionsForm.controls['description'].dirty || surveyQuestionsForm.controls['description'].touched)"
+            class="invalid-data">
+            Please enter description          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Target</label>
+          <input class="form-control" formControlName="target" placeholder="Enter Target">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['target'].invalid && (surveyQuestionsForm.controls['target'].dirty || surveyQuestionsForm.controls['target'].touched)"
+            class="invalid-data">
+            Please enter target          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Amount</label>
+          <input class="form-control" formControlName="amount" placeholder="Enter Amount">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['amount'].invalid && (surveyQuestionsForm.controls['amount'].dirty || surveyQuestionsForm.controls['amount'].touched)"
+            class="invalid-data">
+            Please enter amount          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>User Id</label>
+          <input class="form-control" formControlName="userId" placeholder="Enter User Id">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['userId'].invalid && (surveyQuestionsForm.controls['userId'].dirty || surveyQuestionsForm.controls['userId'].touched)"
+            class="invalid-data">
+            Please enter user id          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Survey Questions</label>
+          <input class="form-control" formControlName="surveyQuestions" placeholder="Enter Survey Questions">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['surveyQuestions'].invalid && (surveyQuestionsForm.controls['surveyQuestions'].dirty || surveyQuestionsForm.controls['surveyQuestions'].touched)"
+            class="invalid-data">
+            Please enter survey questions          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Start Date</label>
+          <input class="form-control" formControlName="startDate" placeholder="Enter Start Date">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['startDate'].invalid && (surveyQuestionsForm.controls['startDate'].dirty || surveyQuestionsForm.controls['startDate'].touched)"
+            class="invalid-data">
+            Please enter start date          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>End Date</label>
+          <input class="form-control" formControlName="endDate" placeholder="Enter End Date">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['endDate'].invalid && (surveyQuestionsForm.controls['endDate'].dirty || surveyQuestionsForm.controls['endDate'].touched)"
+            class="invalid-data">
+            Please enter end date          </small>
+        </div>
+          
+                          <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Is Available</label>
+          
+          <select class="form-control" formControlName="isAvailable" placeholder="Enter Is Available">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="surveyQuestionsForm.controls['isAvailable'].invalid && (surveyQuestionsForm.controls['isAvailable'].dirty || surveyQuestionsForm.controls['isAvailable'].touched)"
+            class="invalid-data">
+            Please enter is available          </small>
+        </div>
+          
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+<button class="footer-button" [disabled]="!surveyQuestionsForm.valid"   (click)="submit(surveyQuestionsForm.value)">Submit</button>
+
+

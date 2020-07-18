@@ -1,0 +1,116 @@
+
+
+
+<div class="header">
+  <div class="header-title">
+    <img src="assets/images/left-icon.png" routerLink="/create-video-list">
+    <ion-title> createVideo Update </ion-title> 
+  </div>
+</div>
+
+<div class="page white-bg form-page">
+  <div [formGroup]="createVideoForm" class="form">
+    <div class="card-body">
+      <div class="row">
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Name</label>
+          <input class="form-control" formControlName="name" placeholder="Enter Name">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createVideoForm.controls['name'].invalid && (createVideoForm.controls['name'].dirty || createVideoForm.controls['name'].touched)"
+            class="invalid-data">
+            Please enter name          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Description</label>
+          <input class="form-control" formControlName="description" placeholder="Enter Description">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createVideoForm.controls['description'].invalid && (createVideoForm.controls['description'].dirty || createVideoForm.controls['description'].touched)"
+            class="invalid-data">
+            Please enter description          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Target</label>
+          <input class="form-control" formControlName="target" placeholder="Enter Target">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createVideoForm.controls['target'].invalid && (createVideoForm.controls['target'].dirty || createVideoForm.controls['target'].touched)"
+            class="invalid-data">
+            Please enter target          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Amount</label>
+          <input class="form-control" formControlName="amount" placeholder="Enter Amount">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createVideoForm.controls['amount'].invalid && (createVideoForm.controls['amount'].dirty || createVideoForm.controls['amount'].touched)"
+            class="invalid-data">
+            Please enter amount          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>User Id</label>
+          <input class="form-control" formControlName="userId" placeholder="Enter User Id">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createVideoForm.controls['userId'].invalid && (createVideoForm.controls['userId'].dirty || createVideoForm.controls['userId'].touched)"
+            class="invalid-data">
+            Please enter user id          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Video Url</label>
+          <input class="form-control" formControlName="videoUrl" placeholder="Enter Video Url">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createVideoForm.controls['videoUrl'].invalid && (createVideoForm.controls['videoUrl'].dirty || createVideoForm.controls['videoUrl'].touched)"
+            class="invalid-data">
+            Please enter video url          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Start Date</label>
+          <input class="form-control" formControlName="startDate" placeholder="Enter Start Date">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createVideoForm.controls['startDate'].invalid && (createVideoForm.controls['startDate'].dirty || createVideoForm.controls['startDate'].touched)"
+            class="invalid-data">
+            Please enter start date          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>End Date</label>
+          <input class="form-control" formControlName="endDate" placeholder="Enter End Date">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createVideoForm.controls['endDate'].invalid && (createVideoForm.controls['endDate'].dirty || createVideoForm.controls['endDate'].touched)"
+            class="invalid-data">
+            Please enter end date          </small>
+        </div>
+          
+                          <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Is Available</label>
+          
+          <select class="form-control" formControlName="isAvailable" placeholder="Enter Is Available">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="createVideoForm.controls['isAvailable'].invalid && (createVideoForm.controls['isAvailable'].dirty || createVideoForm.controls['isAvailable'].touched)"
+            class="invalid-data">
+            Please enter is available          </small>
+        </div>
+          
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+<button class="footer-button" [disabled]="!createVideoForm.valid"   (click)="submit(createVideoForm.value)">Submit</button>
+
+

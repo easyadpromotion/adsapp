@@ -95,29 +95,17 @@ placeid: any;
   ngOnInit() { 
     this.loaderService.hideLoader();
     this.createPhotoFrameForm = this.formBuilder.group({
-
       name: ['', [Validators.required]],
-
       description: ['', [Validators.required]],
-
       targetCount: ['', [Validators.required]],
-
-      targetType: ['', [Validators.required]],
-
-     // targetAge: ['', [Validators.required]],
       locality: ['', [Validators.required]],
-     
       amount: ['', [Validators.required]],
       photoFrameUrl: ['', [Validators.required]],
-    //  photoFrame: ['-', Validators.required],
-      //photoFrameCategory: ['-', [Validators.required]],
-
       startDate: ['', [Validators.required]],
-
       endDate: ['', [Validators.required]],
       mode: ['', [Validators.required]],
       paymentAmount:['', [Validators.required]],
-      category: ['', [Validators.required]],
+      category: ['', [Validators.required]]
 
     });
 
@@ -218,47 +206,49 @@ placeid: any;
     });
     console.log(this.imageFrames)
   }
-//image upload function
-onFileChange(event) {
 
-  if (event.target.files.length > 0) {
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append('file', file);
-    this.loaderService.showLoader('Uploading photo, please wait ').then(() => {
-      try {
-        this.httpService.upload(formData, 'api/uploadImage').subscribe(res => {
+
+  //image upload function
+  onFileChange(event) {
+
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      this.loaderService.showLoader('Uploading photo, please wait ').then(() => {
+        try {
+          this.httpService.upload(formData, 'api/uploadImage').subscribe(res => {
+            this.loaderService.hideLoader();
+            console.log(res)
+            this.createPhotoFrameForm.patchValue({
+              photoFrameUrl: res.file
+            }) 
+          }, (err) => {
+
+            this.loaderService.hideLoader();
+            this.alertService.presentNetworkAlert();
+          });
+        } catch (e) {
           this.loaderService.hideLoader();
-          console.log(res)
-          this.createPhotoFrameForm.patchValue({
-            photoFrameUrl: res.file
-          }) 
-        }, (err) => {
+          this.alertService.presentAlert('Error', 'Something went wrong, please try again', 'Okay');
+        }
+      })
 
-          this.loaderService.hideLoader();
-          this.alertService.presentNetworkAlert();
-        });
-      } catch (e) {
-        this.loaderService.hideLoader();
-        this.alertService.presentAlert('Error', 'Something went wrong, please try again', 'Okay');
-      }
-    })
+  
 
- 
-
+    }
   }
-}
 
 
-targetChange(data)
-{
-  this.Pamount1=data*1;
-    this.createPhotoFrameForm.patchValue({'paymentAmount':this.Pamount1});
-    console.log("paymentAmount",this.Pamount1);
-   this.totalAmount=((this.Pamount1)*70)/100;
-    console.log("Amount", this.totalAmount);
-    this.createPhotoFrameForm.patchValue({'amount': this.totalAmount});
-}
+  targetChange(data)
+  {
+    this.Pamount1=data*1;
+      this.createPhotoFrameForm.patchValue({'paymentAmount':this.Pamount1});
+      console.log("paymentAmount",this.Pamount1);
+    this.totalAmount=((this.Pamount1)*70)/100;
+      console.log("Amount", this.totalAmount);
+      this.createPhotoFrameForm.patchValue({'amount': this.totalAmount});
+  }
 
   submit(data) {
     
@@ -266,17 +256,18 @@ targetChange(data)
     data['userId']=this.userService.getUserId()
     data['isAvailable']=true;
     data['users'] = [];
-    data['createdAt'] = new Date().getTime();
+    data['createdAt'] = new Date().toISOString();
     data['amount']=  this.totalAmount;
     data['amountPaid']= this.Pamount1;
     data['photoFrame']='-';
     data['photoFrameCategory']='-';
+    data['gender']=this.gender;
      
-    // if (!this.createPhotoFrameForm.valid) {
-    //   console.log(data)
-		// 	this.util.enableFromValidation(this.createPhotoFrameForm);
-		// 	return;
-    // }
+    if (!this.createPhotoFrameForm.valid) {
+      console.log(data)
+			this.util.enableFromValidation(this.createPhotoFrameForm);
+			return;
+    }
       this.startDate = this.createPhotoFrameForm.value.startDate 
       this.startDate=(new Date(this.startDate));
     
@@ -318,22 +309,10 @@ targetChange(data)
       "callback_url": "http://18.221.73.114:3005/initateTransaction",
       "callback_method": "get"
     }
-    // {
-    //   "operation" 	: "public-pay",
-    //   "bmaster_encode" :"QVFWOHhYS0NyTVZkOHpuU3lTK2tzUT09",
-    //   "name"		: userData['name'],
-    //   "email"		: userData['emailAddress']?userData['emailAddress']:'saisasank001@gmail.com',
-    //   "phone"		: userData['phoneNumber'],
-    //   "amount"	: this.Pamount1+"",
-    //   "title"	: this.createPhotoFrameForm.value.name
-    // }
     ).subscribe(res=>{
       this.loaderService.hideLoader();
       console.log({res});
       data['payment-response']=res;
-      // window.open(res.url,'_blank');
-      // let url="http://18.221.73.114:3005/initateTransaction?status=success&txid=9a643ba7-c739-07f0-983a-a897c37c458c&paymentorderid=bktwVEhnWVcwVzcxZHVpbE1ZbHdlZz09"
-      // window.open(url,'_blank');
       let url=res.short_url;
       let options = {
         location : 'yes',//Or 'no' 
@@ -354,7 +333,6 @@ targetChange(data)
       };
       const browser = this.iab.create(url,"_blank", "toolbar=no,location=no,clearsessioncache=yes,clearcache=yes");
 
-// browser.executeScript(...);
 if (browser.on('loadstart').subscribe)
 	browser.on('loadstart').subscribe((e) => {
       console.log({e})
@@ -387,7 +365,8 @@ if (browser.on('exit').subscribe)
   }
 
   add(data){
-    
+    localStorage.removeItem('form'); 
+    localStorage.removeItem('searchAddres');
     this.firebase.addData('photoads',data).then(res=>{
       this.alertService.presentAlert('Success','Photo ad was promoted successfully','Okay');
       this.router.navigateByUrl('/create-photo-frame-list');

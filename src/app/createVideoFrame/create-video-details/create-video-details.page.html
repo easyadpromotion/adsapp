@@ -1,0 +1,81 @@
+<div class="header details-header">
+  <div class="header-title">
+    <img src="assets/images/left-icon.png" routerLink="/create-video-list">
+    <ion-title> Video Details </ion-title>
+    <div>
+      <div class="action-buttons pull-right">
+        <span (click)="delete(createVideo)" class="button btn white-text"> <i class="fa fa-trash"></i>Delete</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="page view-list">
+  <ion-grid>
+    <ion-row>
+    <ion-col><button [class]="action=='liked'?'active':''" (click)="likeUsers()">Likes</button></ion-col>
+    <ion-col><button [class]="action=='comments'?'active':''" (click)="commentedUsers()">Comments</button></ion-col>
+    <ion-col><button [class]="action=='views'?'active':''" (click)="viewHistory()">Shares</button></ion-col>
+  
+    </ion-row>
+  </ion-grid>
+  <ion-list *ngIf="action=='liked' && likedUsers.length > 0">
+    <ion-list-header>
+      Likes
+    </ion-list-header>
+  
+    <ion-item *ngFor="let item of likedUsers">
+      <ion-avatar slot="start">
+        <img src="assets/male.png" *ngIf="users[item['userId']]['gender']=='Male'">
+        <img src="assets/female.png" *ngIf="users[item['userId']]['gender']=='Female'">
+        <img src="assets/transgender.png" *ngIf="users[item['userId']]['gender']=='Other'">
+      </ion-avatar>
+      <ion-label>
+        <h2 *ngIf="users && users[item['userId']]">{{users[item['userId']]['name']}}</h2> 
+        <h3 *ngIf="users && users[item['userId']]">{{users[item['userId']]['phoneNumber']}}</h3>
+  
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="action=='comments' && commentUsers.length > 0">
+    <ion-list-header>
+      Comments
+    </ion-list-header>
+  
+    <ion-item *ngFor="let item of commentUsers">
+      <ion-avatar slot="start">
+        <img src="assets/male.png" *ngIf="users[item['userId']]['gender']=='Male'">
+        <img src="assets/female.png" *ngIf="users[item['userId']]['gender']=='Female'">
+        <img src="assets/transgender.png" *ngIf="users[item['userId']]['gender']=='Other'">
+      </ion-avatar>
+      <ion-label>
+        <h2 *ngIf="users && users[item['userId']]">{{users[item['userId']]['name']}}</h2> 
+        <h3 *ngIf="users && users[item['userId']]">{{users[item['userId']]['phoneNumber']}}</h3>
+        <p *ngIf="item.commentMessage">{{item.commentMessage}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="action=='views' && viewUsers.length > 0">
+    <ion-list-header>
+      Shares
+    </ion-list-header>
+  
+    <ion-item *ngFor="let item of viewUsers">
+      <ion-avatar slot="start">
+        <img src="assets/male.png" *ngIf="users[item['userId']]['gender']=='Male'">
+        <img src="assets/female.png" *ngIf="users[item['userId']]['gender']=='Female'">
+        <img src="assets/transgender.png" *ngIf="users[item['userId']]['gender']=='Other'">
+      </ion-avatar>
+      <ion-label>
+        <h2 *ngIf="users && users[item['userId']]">{{users[item['userId']]['name']}}</h2> 
+        <h3 *ngIf="users && users[item['userId']]">{{users[item['userId']]['phoneNumber']}}</h3>
+  
+      </ion-label>
+    </ion-item>
+  </ion-list>
+   
+  
+  
+  </div>
+<button class="footer-button white-text" (click)="edit(createVideo)">Update Details</button>

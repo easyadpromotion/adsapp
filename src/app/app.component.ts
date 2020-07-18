@@ -40,19 +40,19 @@ export class AppComponent {
     
     {
       title: 'Video Ads',
-      url: '/videos-list',
+      url: '/videoads',
       icon: 'videocam-outline',
       roles:[ "User"]
     },
     {
       title: 'Survey Ads',
-      url: '/survey-list',
+      url: '/surveyads',
       icon: 'checkmark-done-outline',
       roles:["User"]
     },
     {
       title: 'Frame Ads',
-      url: '/photo-list',
+      url: '/photoads',
       icon: 'image-outline',
       roles:["User"]
     },
