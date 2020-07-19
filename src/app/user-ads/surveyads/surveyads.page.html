@@ -1,9 +1,64 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>surveyads</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
 
-</ion-content>
+
+<div class="header">
+  <div class="header-title">
+    <img src="assets/images/left-icon.png" routerLink="/home">
+  <ion-title> Survey Ads </ion-title> 
+</div>
+</div>
+
+
+
+<div class="page list admin-list" [class]="json && json.length?'page list admin-list':'page list admin-list white-bg'">
+ 
+  <div style="margin-top:10px;text-align: center;">
+  
+    <img src="assets/nomessage.png" *ngIf="!json || !json.length">
+   
+    <div style="text-align: center;margin-top:20px;" *ngIf="!json || !json.length">
+    <h4 style="margin-bottom:15px">No Records Found</h4>
+    <p>No ads in your inbox, just like every other day. Soon we post new ads</p>
+  </div>
+
+  <div class="card rounded-corner" *ngFor="let item of json;let index=index" (click)="view(item)">
+
+      
+      <div class="card-body">
+        <div class="container">
+      <div class="row">
+        <div class="col-8">
+          <h5 class="text-left">{{item.name}}</h5>
+          <p class="text-left">{{item.description}}</p>
+        </div>
+        <div class="col-4">			
+          <i class="fa fa-play-circle secondary-text"></i>
+        </div>
+      </div>
+    
+      
+      <div class="row">
+        <div class="col-6" style="display: flex;
+        align-items: center;margin: 0px;">
+          <p class="text-left" ><i class="fa fa-users secondary-text" style="font-size:20px;"></i> {{item.targetReached}}/{{item.targetCount}}</p>
+        </div>
+        <div class="col-6">
+          <p style="text-align:right;" *ngIf="item.users.indexOf(userId)>-1"><i class="fa fa-money secondary-text" style="font-size:20px;"></i> Rs 0.0<p>
+          <p style="text-align:right;" *ngIf="item.users.indexOf(userId)==-1"><i class="fa fa-money secondary-text" style="font-size:20px;"></i> Rs {{(item.amount/item.targetCount).toFixed(2)}}<p>
+        </div>
+      </div>
+      
+    </div>
+      </div>
+  
+  </div> 
+
+</div>
+
+
+ 
+ 
+
+
+ 
+ 

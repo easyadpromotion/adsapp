@@ -1,9 +1,67 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>videoads</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-</ion-content>
+<div class="form-page">
+  <div class="header">
+    <div style="display: flex;
+      font-size: 25px;
+      align-items: center;">
+     <img src="assets/images/left-icon.png" routerLink="/home">
+    <ion-title>  Video Ads </ion-title> 
+  </div>
+    
+  </div>
+  
+  </div>
+  <div class="page list admin-list" [class]="json && json.length?'page list admin-list':'page list admin-list white-bg'">
+    
+    <div style="margin-top:10px;text-align: center;">
+    
+      <img src="assets/nomessage.png"   *ngIf="!json || !json.length">
+     
+      <div  *ngIf="!json || !json.length" style="text-align: center;margin-top:20px;">
+      <h1 style="margin-bottom:15px">No Records Found</h1>
+      <p>No ads in your inbox, just like every other day. Soon we post new ads</p>
+    </div>
+  
+    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="add" (click)="add()" ></ion-icon>
+      </ion-fab-button>
+    </ion-fab> -->
+  <div style="margin-top:10px;" >
+   
+  
+    <div class="card rounded-corner" *ngFor="let item of json;let index=index" (click)="photoDetails(item)">
+      <button  style="font-size: 15px;
+      position: absolute;
+      right: 10px;
+      top: 10px;" *ngIf="item.earned" class="button secondary-bg white-text" >Earned <ion-icon name="checkmark"></ion-icon></button>
+      <img  height="200px"  class="card-img-top" width="100%" [src]="httpService.imageUrl+getSplittedname(item.videoImage)" alt="Card image cap">
+        
+        <div class="card-body">
+          <div class="container">
+           
+            <h5 style="text-align: left;">{{item.name}}</h5>
+            <p style="text-align: left;">
+              {{item.description}}
+            </p>
+      
+        
+        <div class="row">
+          <div class="col-6" style="justify-content: flex-end !important;justify-content: flex-start;" >
+            <p align="left"><i class="fa fa-users secondary-text" style="font-size:20px;margin-top:12px !important;text-align: left;"></i> {{item.targetReached}}/{{item.targetCount}}</p>
+          </div>
+          <div class="col-6 right" style="justify-content: flex-end !important">
+            <p style="text-align:right;" *ngIf="item.users.indexOf(userId)>-1"><i class="fa fa-money secondary-text" style="font-size:20px;"></i> Rs 0.0<p>
+            <p style="text-align:right;" *ngIf="item.users.indexOf(userId)==-1"><i class="fa fa-money secondary-text" style="font-size:20px;"></i> Rs {{(item.amount/item.targetCount).toFixed(2)}}<p>
+          </div>
+        </div>
+        
+      </div>
+        </div>
+       
+        <div class="card-footer"> 
+          <p align="center">Can Earn By {{capitalize(item.mode)}}</p>
+        </div> 
+    </div> 
+   
+  </div>
+  

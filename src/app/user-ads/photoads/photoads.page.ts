@@ -33,7 +33,9 @@ export class PhotoadsPage implements OnInit {
     public userService:UserService, private router:Router, public utilService:UtilService,      
     public menuCtrl:MenuController) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadData();
+   }
 
   capitalize(name){
     return name.charAt(0).toUpperCase() + name.slice(1)
@@ -49,6 +51,7 @@ export class PhotoadsPage implements OnInit {
     let fb=this.firebase.getDb().collection('photoads', ref =>
       ref.where('isAvailable', '==', true)
     ).snapshotChanges().subscribe(res=>{
+      console.log(res)
       this.json=[];
       res.forEach(item=>{
         console.log(item)
@@ -72,8 +75,9 @@ export class PhotoadsPage implements OnInit {
           return
         }
         this.location.forEach(element => {
-          console.log(photoAddress[0] , element.long_name)
+          console.log(photoAddress[0] , JSON.stringify(element.long_name), JSON.stringify(element.short_name))
           if(photoAddress[0] == element.long_name || photoAddress[0] == element.short_name){
+            json['earned']=json['users'].indexOf(this.userService.getUserId())>-1
             this.json.push(json);
           }
         })
@@ -87,7 +91,7 @@ export class PhotoadsPage implements OnInit {
 
 ionViewWillEnter()
 {
-this.loadData();
+
 
 }
 
@@ -96,7 +100,7 @@ this.loadData();
 
   photoDetails(data){
     localStorage.setItem('photoDetails', JSON.stringify(data));
-    this.router.navigate(['/photo-detail'])
+    this.router.navigate(['/photoad-detail'])
   }
 
   openMenu(){

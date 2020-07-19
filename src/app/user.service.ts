@@ -55,6 +55,15 @@ referredUser
     })
   }
 
+  updateWallet(amount){
+    let updatedAmount=eval(this.getWalletAmount()+"")+eval(amount+"");
+    console.log("updatedamount"+amount,updatedAmount,this.getWalletAmount())
+    this.updateUser({walletAmount:updatedAmount});
+    let loginData=this.getLoginData();
+    loginData['walletAmount']=updatedAmount;
+    localStorage.setItem('userData',JSON.stringify(loginData));
+  }
+
   checkRouteAccess(){
     if(localStorage.getItem('userData')===null){
       
@@ -69,8 +78,8 @@ referredUser
   getWalletAmount(){
     try{
       this.userData = JSON.parse(localStorage.getItem('userData'))
-      
-      return eval(this.userData.walletAmount+"").toFixed(2);
+      let amount=this.userData.walletAmount?this.userData.walletAmount:0;
+      return eval(amount+"").toFixed(2);
     }catch(e){}
 
   }

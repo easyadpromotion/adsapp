@@ -374,35 +374,6 @@ if (browser.on('exit').subscribe)
     
   }
 
-  payment(params) {
-    console.log(this.photoResponse['isAvailable'])
-    this.photoResponse['isAvailable']="1";
-    console.log(this.photoResponse['_id'])
-    this.loaderService.showLoader('Processing payment, please wait ..').then(() => {
-      try {
-        this.httpService.postApi(this.photoResponse, 'paymentStatus').subscribe((res) => {
-          this.loaderService.hideLoader();
-
-          if(res["success"])
-          {
-            this.httpService.postApi( this.photoResponse, 'createPhotoFrame/updateDetails/' +  this.photoResponse['_id']).subscribe((res: any) => {
-              this.loaderService.hideLoader();
-           
-            });
-          }
-          this.clearData();
-          this.router.navigateByUrl('/create-photo-frame-list')
-        }, (err) => {
-
-          this.loaderService.hideLoader();
-          this.alertService.presentNetworkAlert();
-        });
-      } catch (e) {
-        this.loaderService.hideLoader();
-        this.alertService.presentAlert('Error', 'Something went wrong, please try again', 'Okay');
-      }
-    })
-  }
 
   clearData(){
     localStorage.removeItem('form');

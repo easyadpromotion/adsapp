@@ -234,11 +234,58 @@ export class CreateVideoAddPage implements OnInit {
     }
   }
 
-  pai(data){
-    if(eval(data['amountPaid']+"")*100<1){
-      this.alertService.presentAlert('Error','Amount cannot be less than 1 rupee','Okay');
-      return;
+
+  selectAll(){
+    this.createVideoForm.patchValue({targetType:'Male'})
+  }
+
+  targetChange(data)
+  {
+    this.Pamount1=data*1;
+      this.createVideoForm.patchValue({'paymentAmount':this.Pamount1});
+      console.log("paymentAmount",this.Pamount1);
+    this.totalAmount=((this.Pamount1)*70)/100;
+      console.log("Amount", this.totalAmount);
+      this.createVideoForm.patchValue({'amount': this.totalAmount});
+  }
+
+  submit(data) {
+    
+    data['targetReached'] =0;
+    data['userId']=this.userService.getUserId()
+    data['isAvailable']=true;
+    data['users'] = [];
+    data['createdAt'] = new Date().toISOString();
+    data['amount']=  this.totalAmount;
+    data['amountPaid']= this.Pamount1;
+    data['photoFrame']='-';
+    data['photoFrameCategory']='-';
+    data['gender']=this.gender;
+     
+    if (!this.createVideoForm.valid) {
+      console.log(data)
+			this.util.enableFromValidation(this.createVideoForm);
+			return;
     }
+      this.startDate = this.createVideoForm.value.startDate 
+      this.startDate=(new Date(this.startDate));
+    
+      this.endDate=this.createVideoForm.value.endDate
+      this.m=moment(this.startDate)
+      this.n=moment(this.endDate)
+     
+      if(moment((this.startDate)).isSameOrAfter(moment().format('LL')) && moment(this.startDate).isSameOrBefore(moment(this.endDate)))
+      {
+        this.pai(data)
+      }
+      else
+      {
+        this.alertService.presentAlert('Error',"Please check the dates you have entered", 'Okay');
+      } 
+
+  }
+
+  pai(data){
     this.loaderService.showLoader('');
     let userData=JSON.parse(localStorage.getItem('userData'));
     this.httpService.getPaymentLink("generateGateway",
@@ -316,123 +363,14 @@ if (browser.on('exit').subscribe)
     })
   }
 
-
-  targetChange(data)
-  {
-    try{
-      let seconds=this.createVideoForm.value.seconds;
-      this.Pamount1=((seconds*(0.1))*data).toFixed(2);
-        this.createVideoForm.patchValue({'paymentAmount':this.Pamount1});
-        console.log("paymentAmount", this.Pamount1);
-        this.totalAmount=(((this.Pamount1)*70)/100).toFixed(2);
-        console.log("Amount", this.totalAmount);
-        this.createVideoForm.patchValue({'amount':this.totalAmount});
-    }catch(e){
-
-    }
-    console.log(data);
-   
-
-  }
-
-  submit(data) {
-    
-    data['users'] = [];
-    data['targetReached'] =0;
-    data['userId']=this.userService.getUserId()
-    data['isAvailable']=true;
-    data['users'] = [];
-    data['createdAt'] = new Date().toISOString();
-    data['amount']=  this.totalAmount;
-    data['amountPaid']= this.Pamount1;
-    data['photoFrame']='-';
-    data['photoFrameCategory']='-';
-    data['gender']=this.gender;
-
-    if (!this.createVideoForm.valid) {
-      console.log(data)
-			this.util.enableFromValidation(this.createVideoForm);
-			return;
-		}
-  
-  
-      this.startDate = this.createVideoForm.value.startDate 
-      this.startDate=(new Date(this.startDate));
-
-      this.endDate=this.createVideoForm.value.endDate
-      this.m=moment(this.startDate)
-      this.n=moment(this.endDate)
-
-      if(moment((this.startDate)).isSameOrAfter(moment().format('LL')) && moment(this.startDate).isSameOrBefore(moment(this.endDate)))
-      {
-        this.pai(data); 
-      }
-      else
-      {
-        this.alertService.presentAlert('Error',"Please check the dates you have entered", 'Okay');
-      }
-
-   
-
-  }
-
-  selectAll(){
-    this.createVideoForm.patchValue({targetType:'Male'})
-  }
-
   add(data){
     localStorage.removeItem('form'); 
     localStorage.removeItem('searchAddres');
     this.firebase.addData('videoads',data).then(res=>{
-      this.alertService.presentAlert('Success','Video ad was promoted successfully','Okay');
+      this.alertService.presentAlert('Success','Photo ad was promoted successfully','Okay');
       this.router.navigateByUrl('/create-video-list');
     })
     
-  }
-
-  payment(params) {
-    this.videoResponse['isAvailable']="1";
-    this.loaderService.showLoader('Processing payment, please wait').then(() => {
-      try {
-        this.httpService.postApi(this.videoResponse, 'paymentStatus').subscribe((res) => {
-          this.loaderService.hideLoader();
-          if (res["success"]) {
-            //make use of payment response
-            if (res['data']['paymentStatus'] == 0) {
-              //this.alertService.presentAlert('Success', 'Payment not done', 'Okay');
-            }
-            else if (res['data']['paymentStatus'] == 1) {
-              //update isavailable in video edit 
-              this.videoResponse['isAvailable'] ='1'
-              this.videoResponse['updatedAt'] = new Date().getTime();
-              this.httpService.postApi(this.videoResponse, 'createVideo/updateDetails/'+this.videoResponse['_id']).subscribe((res) => {
-                if(res["success"]){
-                  //this.alertService.presentAlert('Success', 'Successfully updated', 'Okay');
-                  this.clearData()
-                  this.router.navigate(['/create-video-list'])
-                }else{
-                  this.alertService.presentAlert('Error', res["message"], 'Okay');
-                }
-              })
-              // this.alertService.presentAlert('Success', 'Payment Success', 'Okay');
-            }
-            else {
-              this.alertService.presentAlert('Failed', 'Payment Failed', 'Okay');
-            }
-            //this.router.navigate(['/create-video-list'])
-          } else {
-            this.alertService.presentAlert('Error', res["message"], 'Okay');
-          }
-        }, (err) => {
-
-          this.loaderService.hideLoader();
-          this.alertService.presentNetworkAlert();
-        });
-      } catch (e) {
-        this.loaderService.hideLoader();
-        this.alertService.presentAlert('Error', 'Something went wrong, please try again', 'Okay');
-      }
-    })
   }
 
   clearData(){

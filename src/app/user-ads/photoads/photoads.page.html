@@ -30,14 +30,17 @@
    
   
     <div class="card rounded-corner" *ngFor="let item of json;let index=index" (click)="photoDetails(item)">
-   
+      <button  style="font-size: 15px;
+      position: absolute;
+      right: 10px;
+      top: 10px;" *ngIf="item.earned" class="button secondary-bg white-text" >Earned <ion-icon name="checkmark"></ion-icon></button>
       <img  height="200px"  class="card-img-top" width="100%" [src]="httpService.imageUrl+getSplittedname(item.photoFrameUrl)" alt="Card image cap">
         
         <div class="card-body">
           <div class="container">
            
             <h5 style="text-align: left;">{{item.name}}</h5>
-            <p>
+            <p style="text-align: left;">
               {{item.description}}
             </p>
       

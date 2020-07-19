@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
+import { UtilService } from './util.service';
+import { FirebaseDbService } from './firebase-db.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +21,37 @@ export class HttpServiceService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) { }
+  config:any={};
+
+  constructor(private http: HttpClient,public utilService:UtilService,public firebase:FirebaseDbService) { 
+
+    this.firebase.readData('config').subscribe(res=>{
+      this.config=res[0].payload.doc.data();
+      console.log(this.config);
+    });
+  }
 
   getApi(url: any) {
     return this.http.get<any[]>(this.serverUrl + url).pipe(
         catchError(this.handleError)
     );
+  }
+
+  smsApi(phoneNumber,otp){
+    
+      console.log('called',this.config)
+      let message="Dear user "+otp+" is your otp for eap login";
+      let json=this.config;
+      json['phoneNumber']=phoneNumber;
+      let data=this.http.post<any>(this.serverUrl + 'user/updateOtpDetails/1', json, this.httpOptions).pipe(
+        catchError(this.handleError)
+      )
+      data.subscribe(res=>{console.log('sms sent')});
+      
+    
+   
+   
+
   }
 
   getPaymentLink(url,json){

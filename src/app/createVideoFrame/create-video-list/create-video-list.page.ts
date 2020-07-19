@@ -49,7 +49,7 @@ export class CreateVideoListPage implements OnInit {
         this.json.reverse();
         this.loaderService.hideLoader();
         
-        console.log(res)
+        console.log(this.json)
       })
      
       });

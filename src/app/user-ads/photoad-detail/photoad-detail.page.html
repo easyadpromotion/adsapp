@@ -1,9 +1,49 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>photoadDetail</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="header">
+  <div style="display: flex;
+  font-size: 25px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;">
+    <img src="assets/images/left-icon.png" routerLink="/photoads">
+  <ion-title> {{data.name}} </ion-title> 
+  
+  <button *ngIf="alreadyEarned" style="font-size:15px" class="button secondary-bg white-text" routerLink="/photo-list">Earned <ion-icon name="checkmark"></ion-icon></button>
+</div>
+  <div>
+  </div>
+</div>
 
-<ion-content>
+<div class="page">
+  <div class="bottom-bar">
+    <div>
+    <i class="fa fa-thumbs-up" (click)="addLike()" [class]="liked?'secondary-text fa fa-thumbs-up':'fa fa-thumbs-up'" ></i>
+      <p>Like</p>
+    </div>
+    <div>
+      <i class="fa fa-comment" (click)="openComment()"></i>
 
-</ion-content>
+        <p>Comment</p>
+      </div>
+      <div>
+        <i class="fa fa-share" (click)="share()"  [class]="shared?'secondary-text fa fa-share':'fa fa-share'"></i>
+          <p>Share</p>
+        </div>
+    
+  </div>
+ <img *ngIf="data" [src]="httpService.imageUrl+getSplittedname(data.photoFrameUrl)" width="100%">
+ <div class="white-bg" *ngIf="showComment">
+   <i class='fa fa-times pull-right' style="margin: 5px;font-size:20px" (click)="openComment()"></i>
+  <div class="">
+    <div class="col-xs-12">
+      <textarea class='form-control' rows="3" [(ngModel)]="comment" placeholder="enter your comment"></textarea>
+    </div>
+    
+   
+    <div class="col-xs-12">
+      <button class="secondary-bg white-text full-button" (click)="addComment()">Submit</button>
+    </div>
+
+  </div>
+</div>
+</div>
+

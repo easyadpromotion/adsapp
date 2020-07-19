@@ -46,16 +46,7 @@ export class VerifyOtpPage implements OnInit {
 
     });
 
-    this.registeredUser=JSON.parse(localStorage.getItem('verifyData'));
-
-  
-    this.firebase.getDb().collection('users', ref =>
-      ref.where('phoneNumber', '==', this.registeredUser['phoneNumber'])
-    ).snapshotChanges().subscribe(res=>{
-      // console.log(res[0].payload.doc.id);
-      // console.log(res[0].payload.doc.data())
-      this.registeredUser=res[0].payload.doc.data();
-    })
+    
     
   }
 
@@ -69,35 +60,25 @@ ionViewWillEnter()
 
       this.verifyOtpForm.patchValue({phoneNumber:this.localData.phoneNumber,_id:this.localData._id})
       console.log(this.localData);
+      this.registeredUser=JSON.parse(localStorage.getItem('verifyData'));
+
+  
+    let subscribe=this.firebase.getDb().collection('users', ref =>
+      ref.where('phoneNumber', '==', this.registeredUser['phoneNumber'])
+    ).snapshotChanges().subscribe(res=>{
+      // console.log(res[0].payload.doc.id);
+      // console.log(res[0].payload.doc.data())
+      this.registeredUser=res[0].payload.doc.data();
+      this.httpService.smsApi(this.registeredUser['phoneNumber'],this.registeredUser['otp']);
+      subscribe.unsubscribe();
+    })
 }
 
 //resendOtp
 resendOtp()
 {
   console.log("resending otp")
-      this.loaderService.showLoader('OTP is being sent, Please wait').then(() => {
-        try {
-          let data = this.verifyOtpForm.value
-          console.log("data",data)
-          this.httpService.postApi(data, 'user/updateOtpDetails/' + data._id).subscribe((res: any) => {
-            this.loaderService.hideLoader();
-            if (res["success"]) {
-              this.alertService.presentAlert('Success', 'OTP is sent to your Mobile Number', 'Okay');
-             
-            } else {
-              this.alertService.presentAlert('Error', res["message"], 'Okay');
-            }
-          }, (err) => {
-
-            this.loaderService.hideLoader();
-            this.alertService.presentNetworkAlert();
-          });
-        } catch (e) {
-          this.loaderService.hideLoader();
-          this.alertService.presentAlert('Error', 'Something went wrong, please try again', 'Okay');
-        }
-      })
-    
+  this.httpService.smsApi(this.registeredUser['phoneNumber'],this.registeredUser['otp']);
   
 }
 

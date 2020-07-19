@@ -257,11 +257,7 @@ totalAmount
 	  }
 
 
-	 pai(data){
-		if(eval(data['amountPaid']+"")*100<1){
-		  this.alertService.presentAlert('Error','Amount cannot be less than 1 rupee','Okay');
-		  return;
-		}
+	  pai(data){
 		this.loaderService.showLoader('');
 		let userData=JSON.parse(localStorage.getItem('userData'));
 		this.httpService.getPaymentLink("generateGateway",

@@ -29,6 +29,18 @@ return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
     return Math.floor(1000 + Math.random() * 9000)
   }
 
+  generateSMSOTP() { 
+          
+    // Declare a digits variable  
+    // which stores all digits 
+    var digits = '0123456789'; 
+    let OTP = ''; 
+    for (let i = 0; i < 4; i++ ) { 
+        OTP += digits[Math.floor(Math.random() * 10)]; 
+    } 
+    return OTP; 
+  } 
+
   enableFromValidation(form) {
     Object.keys(form.controls).forEach(field => {
       const control = form.get(field);
