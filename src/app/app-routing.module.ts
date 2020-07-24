@@ -27,7 +27,7 @@ const routes: Routes = [
   // { path: 'wallet', loadChildren: './wallet/wallet.module#WalletPageModule' },
   // { path: 'connectivity-service', loadChildren: './connectivity-service/connectivity-service.module#ConnectivityServicePageModule' },
   // { path: 'google-maps', loadChildren: './google-maps/google-maps.module#GoogleMapsPageModule' },
-  // { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
+  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'verify-otp', loadChildren: './verify-otp/verify-otp.module#VerifyOtpPageModule' },
    { path: 'my-ads', loadChildren: './my-ads/my-ads.module#MyADsPageModule' },
   { path: 'create-photo-frame-list', loadChildren: './createPhotoFrame/create-photo-frame-list/create-photo-frame-list.module#CreatePhotoFrameListPageModule' },
@@ -71,7 +71,8 @@ const routes: Routes = [
   {
     path: 'survey-questions-details',
     loadChildren: () => import('./surveyQuestions/survey-questions-details/survey-questions-details.module').then( m => m.SurveyQuestionsDetailsPageModule)
-  },  {
+  },
+  {
     path: 'photoads',
     loadChildren: () => import('./user-ads/photoads/photoads.module').then( m => m.PhotoadsPageModule)
   },
@@ -94,7 +95,58 @@ const routes: Routes = [
   {
     path: 'surveyad-detail',
     loadChildren: () => import('./user-ads/surveyad-detail/surveyad-detail.module').then( m => m.SurveyadDetailPageModule)
+  },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+  {
+    path: 'eligibility-criteria',
+    loadChildren: () => import('./eligibility-criteria/eligibility-criteria.module').then( m => m.EligibilityCriteriaPageModule)
+  },
+  {
+    path: 'wallet-transactions-list',
+    loadChildren: () => import('./transactions/transactions.module').then( m => m.TransactionsPageModule)
+  },
+  {
+    path: 'terms-conditions',
+    loadChildren: () => import('./terms-conditions/terms-conditions.module').then( m => m.TermsConditionsPageModule)
+  },
+  {
+    path: 'logout',
+    loadChildren: () => import('./logout/logout.module').then( m => m.LogoutPageModule)
+  },
+  {
+    path:'how-to-earn',
+    loadChildren: () => import('./how-to-earn/how-to-earn.module').then(m => m.HowToEarnPageModule)
+  },
+  {
+    path: 'wallet-transaction-list',
+    loadChildren: () => import('./wallet-transaction-list/wallet-transaction-list.module').then( m => m.WalletTransactionListPageModule)
+  },
+  {
+    path: 'wallet-transactions-details',
+    loadChildren: () => import('./wallet-history-details/wallet-history-details.module').then( m => m.WalletHistoryDetailsPageModule)
+  },
+  {
+    path: 'ticket-management-add',
+    loadChildren: () => import('./ticket-management-add/ticket-management-add.module').then( m => m.TicketManagementAddPageModule)
+  },
+  {
+    path: 'help',
+    loadChildren: () => import('./help/help.module').then( m => m.HelpPageModule)
+  },
+  {
+    path: 'conversation-details',
+    loadChildren: () => import('./conversation-details/conversation-details.module').then( m => m.ConversationDetailsPageModule)
+  },  {
+    path: 'tickets',
+    loadChildren: () => import('./tickets/tickets.module').then( m => m.TicketsPageModule)
   }
+
+
+
+
 
 
 

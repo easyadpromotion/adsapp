@@ -67,6 +67,8 @@ export class CreateVideoListPage implements OnInit {
     }
 
   add() {
+    localStorage.removeItem('form');
+    localStorage.removeItem('searchAddress');
     this.router.navigate(['/createVideo-add'])
   }
 

@@ -1,0 +1,44 @@
+
+   <div class="header details-header">
+    <div class="header-title">
+      <img src="assets/images/left-icon.png" routerLink="/home">
+      <ion-title> Help and Support </ion-title>
+    </div>
+  </div>
+
+  <div class="page view-list">
+    <ion-grid>
+      <ion-row>
+        <ion-col><button [class]="action=='Opened'?'active':''" (click)="openTickets()">Open</button></ion-col>
+        <ion-col><button [class]="action=='Closed'?'active':''" (click)="closedTickets()">Closed</button></ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <img src="assets/nomessage.png" *ngIf="!json || !json.length">
+    <div style="text-align: center;margin-top:20px;" *ngIf="!json || !json.length">
+        <h4 style="margin-bottom:15px">No Records Found</h4>
+        <p>No ads in your inbox, just like every other day. Soon we post new ads</p>
+      </div>
+      
+      <div class="card rounded-corner" [hidden]="(action=='Opened' && !items.status) || (action=='Closed' && items.status)" (click)="conversationList(items)" *ngFor="let items of json;let i=index" style="margin-top:10px;margin-bottom:10px;">
+     
+            <div class="card-body" style="display: flex;justify-content: space-between;align-items: center;padding:5px">
+                <ion-grid style="margin-bottom: 0px;">
+                <ion-row>
+                    <ion-col size="8">
+                        <span> <b>#{{i+1}}</b> {{items.subject}}</span>
+                    </ion-col>
+                    <ion-col>
+                        <span><button  class="btn btn-round btn-primary" >{{items.status?'Active':'Closed'}}</button></span>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>  
+                
+            </div>
+      </div>
+
+     
+
+  </div>
+
+

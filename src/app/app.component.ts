@@ -24,12 +24,12 @@ export class AppComponent {
       icon: 'home-outline',
       roles:["Franchise", "Vendor", "User", "Admin"]
     },
-    {
-      title: 'Profile',
-      url: '/profile',
-      icon: 'person-outline',
-      roles:["Admin","User"]
-    },
+    // {
+    //   title: 'Profile',
+    //   url: '/profile',
+    //   icon: 'person-outline',
+    //   roles:["Admin","User"]
+    // },
     
     {
       title: 'My Ads',
@@ -63,12 +63,12 @@ export class AppComponent {
       icon: 'timer-outline',
       roles:["Franchise", "Vendor", "User"]
     },
-    {
-      title: 'Change Password',
-      url: '/change-password',
-      icon: 'key-outline',
-      roles:["Franchise", "Vendor", "User", "Admin"]
-    },
+    // {
+    //   title: 'Change Password',
+    //   url: '/change-password',
+    //   icon: 'key-outline',
+    //   roles:["Franchise", "Vendor", "User", "Admin"]
+    // },
     {
       title: 'Terms and Coditions',
       url: '/terms-conditions',
@@ -82,12 +82,12 @@ export class AppComponent {
       icon: 'layers-outline',
       roles:["Franchise", "Vendor", "User", "Admin"]
     },
-    {
-      title: 'Help and Support',
-      url: '/help',
-      icon: 'key-outline',
-      roles:["Franchise", "Vendor", "User", "Admin"]
-    },
+    // {
+    //   title: 'Help and Support',
+    //   url: '/help',
+    //   icon: 'key-outline',
+    //   roles:["Franchise", "Vendor", "User", "Admin"]
+    // },
     {
       title: 'Logout',
       url: '/logout',

@@ -1,0 +1,52 @@
+
+<div class="header details-header">
+  <div class="header-title">
+    <img src="assets/images/left-icon.png" routerLink="/wallet-transactions-list">
+  <ion-title> Wallet Transaction Details </ion-title> 
+  <div>
+    <!-- <div class="action-buttons pull-right">
+      <span  (click)="delete(walletHistory)" class="button btn white-text"> <i class="fa fa-trash" ></i>Delete</span>
+      </div> -->
+  </div>
+</div>
+</div>
+
+
+<div class="page">
+
+  <div class="card">
+    <div class="card-body huge-details">
+      
+      <div class="row">
+            
+              
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Amount</label>
+          <span>{{walletHistory['amount']}}</span>
+        </div>
+
+                
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Credit/Debit</label>
+          <span>{{walletHistory['creditDebit']?"Credit":"Debit"}}</span>
+        </div>
+
+
+        <div class="col-xs-12 col-sm-6 col-md-6" *ngIf="(walletHistory['type'])">
+          <label>Type</label>
+          <span>{{walletHistory['type']}}</span>
+        </div>
+
+              
+  </div>
+    </div>
+  </div>
+
+
+</div>
+<button class="footer-button white-text" (click)="getSupport(walletHistory)">Contact Us</button>
+
+
+
+  
+  

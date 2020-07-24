@@ -7,217 +7,110 @@
   import { AlertService } from 'src/app/alert.service';
   import { LoaderService } from 'src/app/loader.service';
   import { UserService } from 'src/app/user.service';
+import { FirebaseDbService } from 'src/app/firebase-db.service';
+import { UtilService } from 'src/app/util.service';
 
 @Component({
   selector: 'app-survey-questions-details',
-  templateUrl: './surveyQuestions-details.page.html',
+  templateUrl: './survey-questions-details.page.html',
   styleUrls: ['./survey-questions-details.page.scss'],
 })
 export class SurveyQuestionsDetailsPage implements OnInit {
-  surveyId;
-  surveyQuestionsList;
-  json:any=[];
-  viewUsers:any=[];
+  createPhotoFrame;
   likedUsers:any=[]
-    commentUsers:any=[]
-    action="liked";
-  users={};
-  id
-  constructor( private router:Router,public loadingCtrl: LoadingController,
-    public httpService:HttpServiceService, public alertService:AlertService,
-    public userService:UserService,
-    public loaderService:LoaderService) {
-    this.surveyQuestionsList = JSON.parse(localStorage.getItem('surveyDetails'))
-    console.log("questions",this.surveyQuestionsList)
-  }
+  commentUsers:any=[]
+  viewUsers:any=[]
+  action="liked";
+  users:any={};
+id;
+data={};
+constructor( private router:Router,public loadingCtrl: LoadingController,
+  public httpService:HttpServiceService, public alertService:AlertService,
+  public userService:UserService, public firebase:FirebaseDbService,
+  public loaderService:LoaderService,public utilService:UtilService) {
+  this.createPhotoFrame = JSON.parse(localStorage.getItem('createPhotoFrameDetails'))
+  console.log("photo frame details",this.createPhotoFrame)
+}
 
-  ngOnInit() { this.loaderService.hideLoader();
-    // this.loaderService.showLoader('Please wait').then(()=>{
-    //   this.httpService.postApi({},'user/getByCondition').subscribe(res=>{
-    //     console.log(res);
-        
-    //     let tmp={};
-    //     res.data.forEach(item=>{
-    //       tmp[item["_id"]]=item;
-    //     })
-    //     this.users=tmp;
-    //     console.log(tmp);
-    //     this.loaderService.hideLoader()
-    //     this.likeUsers();
-        
-    //   },err=>{
-    //     this.loaderService.hideLoader();
-    //     this.alertService.presentNetworkAlert();
-    //   })
-    // })
-    
-  }
-
-
-
-  ionViewWillEnter()
-  {
-    this.loaderService.showLoader('Please wait').then(()=>{
-      this.httpService.postApi({},'user/getByCondition').subscribe(res=>{
-        console.log(res);
-        
-        let tmp={};
-        res.data.forEach(item=>{
-          tmp[item["_id"]]=item;
-        })
-        this.users=tmp;
-        console.log(tmp);
-        this.loaderService.hideLoader()
-        this.likeUsers();
-        
-      },err=>{
-        this.loaderService.hideLoader();
-        this.alertService.presentNetworkAlert();
-      })
-    })
-  }
-
-
-
-  toggleStatus(id,status){
-    let data={
-      isAvailable:status
-    }
-    this.loaderService.showLoader('Updating, please wait').then(()=>{
-      try{
-        this.httpService.postApi(data, 'surveyQuestions/updateDetails' + id).subscribe((res: any) => {
-          this.loaderService.hideLoader();
-          if (res["success"]) {
-            this.alertService.presentAlert('Success','Successfully updated','Okay');
-            this.router.navigate(['/surveyQuestions-list'])
-          } else {
-            this.alertService.presentAlert('Error',res["message"],'Okay');
-          }
-        },(err)=>{
-          
-          this.loaderService.hideLoader();
-          this.alertService.presentNetworkAlert();
-         });    
-      }catch(e){
-        this.loaderService.hideLoader();
-        this.alertService.presentAlert('Error','Something went wrong, please try again','Okay');
-      }
-    })
-  }
-
-  delete(data) {
-    data['isAvailable']=0
-    this.id=data['_id']
-    this.loaderService.showLoader('Deleting, please wait').then(()=>{
-      try{
-        this.httpService.postApi(data, 'surveyQuestions/updateDetails/' +data.id).subscribe((res: any) => {
-          this.loaderService.hideLoader();
-          if (res["success"]) {
-            this.alertService.presentAlert('Success','Successfully deleted','Okay');
-            this.router.navigate(['/survey-questions-list'])
-            this.loaderService.hideLoader();
-          } else {
-            this.alertService.presentAlert('Error',res["message"],'Okay');
-          }
-        },(err)=>{
-          
-          this.loaderService.hideLoader();
-          this.alertService.presentNetworkAlert();
-         });    
-      }catch(e){
-        this.loaderService.hideLoader();
-        this.alertService.presentAlert('Error','Something went wrong, please try again','Okay');
-      }
-    })
-
-  }
-  edit(data) {
-    console.log(data)
-    localStorage.setItem('editSurveyQuestionsData', JSON.stringify(data));
-    this.router.navigate(['/survey-questions-edit'])
-  }
+ngOnInit() { this.loaderService.hideLoader();
+  // this.loaderService.showLoader('Please wait').then(()=>{
+   
   
-  likeUsers(){
-    this.action="liked";
-    console.log("likedUser photo id",this.surveyQuestionsList['_id'])
-    this.loaderService.showLoader('Please wait ').then(()=>{
-      try{
-        this.httpService.postApi({ videoFrameSurveyId: this.surveyQuestionsList['_id']}, 'like/getByCondition').subscribe((res: any) => {
-          
-          if (res["success"]) {
-            console.log("get from likes",res)
-            this.likedUsers = res['data']
-            
-              this.loaderService.hideLoader();
-              
-           
-          } else {
-            this.loaderService.hideLoader();
-            this.alertService.presentAlert('Error',res["message"],'Okay');
-          }
-        },(err)=>{
-          
-          this.loaderService.hideLoader();
-          this.alertService.presentNetworkAlert();
-         });    
-      }catch(e){
-        this.loaderService.hideLoader();
-        this.alertService.presentAlert('Error','Something went wrong, please try again','Okay');
-      }
-    })
-  }
+}
 
-  commentedUsers(){
-    this.action='comments';
-    console.log("commented user photo id",this.surveyQuestionsList['_id'])
-    this.loaderService.showLoader('Please wait ').then(()=>{
-      try{
-        this.httpService.postApi({ videoFrameSurveyId: this.surveyQuestionsList['_id']}, 'comment/getByCondition').subscribe((res: any) => {
-          this.loaderService.hideLoader();
-          if (res["success"]) {
-            console.log("get from comments",res)
-            this.commentUsers = res['data']
-            
-          } else {
-            this.alertService.presentAlert('Error',res["message"],'Okay');
-          }
-        },(err)=>{
-          
-          this.loaderService.hideLoader();
-          this.alertService.presentNetworkAlert();
-         });    
-      }catch(e){
-        this.loaderService.hideLoader();
-        this.alertService.presentAlert('Error','Something went wrong, please try again','Okay');
-      }
+ionViewWillEnter(){
+  this.data = JSON.parse(localStorage.getItem('surveyDetails'))
+  let user=this.firebase.readData('users').subscribe(userData=>{
+    userData.forEach(item=>{
+      let data=item.payload.doc.data();
+      this.users[item.payload.doc.id]=data;
+    });
+    user.unsubscribe();
+      
+    let fb=this.firebase.getDb().collection('likes', ref =>
+      ref.where('videoFrameSurveyId', '==', this.data['id'])
+    ).snapshotChanges().subscribe(res=>{
+      res.forEach(item=>{
+        let data=item.payload.doc.data();
+        this.likedUsers.push(data)
+      })
+      fb.unsubscribe();
+      console.log(res)
     })
-  }
-  viewHistory(){
-    this.action='views';
-    console.log("viewhistory photo id",this.surveyQuestionsList['_id'])
-    this.loaderService.showLoader('Please wait').then(()=>{
-      try{
-        this.httpService.postApi({ videoFrameSurveyId: this.surveyQuestionsList['_id']}, 'viewHistory/getByCondition').subscribe((res: any) => {
-          this.loaderService.hideLoader();
-          if (res["success"]) {
-            console.log("get from history",res)
-            this.viewUsers = res['data']
-           
-          } else {
-            this.alertService.presentAlert('Error',res["message"],'Okay');
-          }
-        },(err)=>{
-          
-          this.loaderService.hideLoader();
-          this.alertService.presentNetworkAlert();
-         });    
-      }catch(e){
-        this.loaderService.hideLoader();
-        this.alertService.presentAlert('Error','Something went wrong, please try again','Okay');
-      }
-    })
-  }
 
+    let comments=this.firebase.getDb().collection('comments', ref =>
+      ref.where('videoFrameSurveyId', '==', this.data['id'])
+    ).snapshotChanges().subscribe(res=>{
+      res.forEach(item=>{
+        let data=item.payload.doc.data();
+        this.commentUsers.push(data)
+      })
+      comments.unsubscribe();
+      console.log(res)
+    })
+
+    let shares=this.firebase.getDb().collection('shares', ref =>
+      ref.where('videoFrameSurveyId', '==', this.data['id'])
+    ).snapshotChanges().subscribe(res=>{
+      res.forEach(item=>{
+        let data=item.payload.doc.data();
+        this.viewUsers.push(data)
+      })
+      shares.unsubscribe();
+      console.log(res)
+    })
+
+  });
+ 
+}
+
+
+edit(data) {
+  console.log(data)
+  localStorage.setItem('editData', JSON.stringify(data));
+  this.router.navigate(['/create-photo-frame-edit'])
+}
+
+likeUsers(){
+  this.action='liked';
+  console.log("likedUser photo id",this.createPhotoFrame['_id'])
 
 }
 
+commentedUsers(){
+  this.action='comments';
+  console.log("commented user photo id",this.createPhotoFrame['_id'])
+ 
+}
+
+viewHistory(){
+  this.action='views';
+  console.log("viewhistory photo id",this.createPhotoFrame['_id'])
+ 
+}
+
+
+
+
+
+}

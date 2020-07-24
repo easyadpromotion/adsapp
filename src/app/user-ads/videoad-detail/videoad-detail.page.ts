@@ -98,6 +98,12 @@ export class VideoadDetailPage implements OnInit {
     data['createdAt']=new Date().toISOString()
     this.firebase.addData('shares',data);
     this.shared=true;
+    this.socialSharing.shareWithOptions({
+      message:'Hey Im promoting my add in EAP App',
+      subject:this.data['name'],
+      files:[this.httpService.imageUrl+this.getSplittedname(this.data['photoFrameUrl'])],
+      url:this.httpService.imageUrl+this.getSplittedname(this.data['photoFrameUrl'])
+    })
     if(this.data['users'].indexOf(this.userService.getUserId())==-1 && this.data['mode']=='share')
       {
         this.data['users'].push(this.userService.getUserId());
@@ -107,12 +113,7 @@ export class VideoadDetailPage implements OnInit {
         this.alreadyEarned=true;
         
       }
-      this.socialSharing.shareWithOptions({
-        message:'Hey Im promoting my add in EAP App',
-        subject:this.data['name'],
-        files:[this.httpService.imageUrl+this.getSplittedname(this.data['photoFrameUrl'])],
-        url:this.httpService.imageUrl+this.getSplittedname(this.data['photoFrameUrl'])
-      })
+      
       this.loaderService.hideLoader();
   }
 

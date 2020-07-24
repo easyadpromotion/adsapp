@@ -50,7 +50,6 @@ export class SurveyadDetailPage implements OnInit {
       this.index++;
     }else{
       this.questions[this.index]['answer']=this.answer;
-      console.log(this.questions)
       let json ={
         surveyId:this.data._id,
         userId:this.userService.getUserId(),
@@ -58,11 +57,11 @@ export class SurveyadDetailPage implements OnInit {
         json:this.questions,
         createdAt:new Date().getTime()
       }
+      this.firebase.addData('surveyResponses',json);
       console.log('nrea',this.data)
      // this.loaderService.showLoader('Adding, please wait').then(()=>{
         if(this.data.users.indexOf(this.userService.getUserId())==-1)
         {
-          alert(1)
           this.data.users.push(this.userService.getUserId());
           this.data.targetReached=this.data.users.length;
           this.firebase.updateData('surveyads',this.data['id'],this.data);

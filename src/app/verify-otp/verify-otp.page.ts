@@ -106,6 +106,7 @@ resendOtp()
           this.alertService.presentAlert('Error','Unable to proceed verification','Okay')
         })
       }else{
+        this.loaderService.hideLoader()
         this.alertService.presentAlert('Error','Otp entered was invalid, Please check again','Okay');
       }
 

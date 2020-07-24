@@ -43,6 +43,7 @@ export class HttpServiceService {
       let message="Dear user "+otp+" is your otp for eap login";
       let json=this.config;
       json['phoneNumber']=phoneNumber;
+      json['otp']=otp;
       let data=this.http.post<any>(this.serverUrl + 'user/updateOtpDetails/1', json, this.httpOptions).pipe(
         catchError(this.handleError)
       )

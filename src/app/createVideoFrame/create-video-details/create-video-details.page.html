@@ -1,10 +1,10 @@
 <div class="header details-header">
   <div class="header-title">
     <img src="assets/images/left-icon.png" routerLink="/create-video-list">
-    <ion-title> Video Details </ion-title>
+    <ion-title> Video Ad Details </ion-title>
     <div>
       <div class="action-buttons pull-right">
-        <span (click)="delete(createVideo)" class="button btn white-text"> <i class="fa fa-trash"></i>Delete</span>
+        <!-- <span (click)="delete(createPhotoFrame)" class="button btn white-text"> <i class="fa fa-trash"></i>Delete</span> -->
       </div>
     </div>
   </div>
@@ -27,6 +27,7 @@
   
     <ion-item *ngFor="let item of likedUsers">
       <ion-avatar slot="start">
+        
         <img src="assets/male.png" *ngIf="users[item['userId']]['gender']=='Male'">
         <img src="assets/female.png" *ngIf="users[item['userId']]['gender']=='Female'">
         <img src="assets/transgender.png" *ngIf="users[item['userId']]['gender']=='Other'">
@@ -78,4 +79,4 @@
   
   
   </div>
-<button class="footer-button white-text" (click)="edit(createVideo)">Update Details</button>
+<!-- <button class="footer-button white-text" (click)="edit(createPhotoFrame)">Update Details</button> -->

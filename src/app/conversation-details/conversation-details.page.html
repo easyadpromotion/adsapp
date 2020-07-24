@@ -1,0 +1,110 @@
+
+   <div class="header details-header">
+    <div class="header-title">
+      <img src="assets/images/left-icon.png" routerLink="/tickets">
+      <ion-title> {{conversation['subject']}} </ion-title>
+      
+    </div>
+  </div>
+ <ion-content class="page view-list" style="background: #fff;" #content>
+  <div class="chat-panel">
+  <div class="row no-gutters" [hidden]="bot" *ngFor="let item of allConversations">
+  <div class="col-md-3">
+    
+    <div [class]="item.isUser?'chat-bubble chat-bubble--right':'chat-bubble chat-bubble--left'" [innerHtml]="item.message">
+    </div>
+  </div>
+  </div>
+  
+  <div class="row no-gutters" [hidden]="!bot" *ngFor="let item of allConversations">
+    
+    <div class="col-md-3" *ngIf="item.message=='Hi Please select your issue'">
+      
+      <div class="chat-bubble chat-bubble--right">
+        <button class="btn btn-primary" (click)="sendBotMessage('Cannot Change Password')">Cannot Change Password?</button>
+        <button class="btn btn-primary" (click)="sendBotMessage('Cannot Redeem Amount')">Cannot Redeem Amount?</button>
+      </div>
+    </div>
+    <div class="col-md-3" *ngIf="item.message=='Cannot Redeem Amount'">
+    
+      <div [class]="'chat-bubble chat-bubble--left'" [innerHtml]="item.message">
+      </div>
+    </div>
+    <div class="col-md-3" *ngIf="item.message=='Cannot Change Password'">
+    
+      <div [class]="'chat-bubble chat-bubble--left'" [innerHtml]="item.message">
+      </div>
+    </div>
+    
+    <div class="col-md-3" *ngIf="item.messageId==1">
+    
+      <div [class]="'chat-bubble chat-bubble--right'" [innerHtml]="item.message">
+      </div>
+    </div>
+
+    <div class="col-md-3" *ngIf="item.messageId==2">
+    
+      <div [class]="'chat-bubble chat-bubble--right'" [innerHtml]="item.message">
+      </div>
+    </div>
+
+    <div class="col-md-3" *ngIf="item.messageId==4">
+    
+      <div [class]="'chat-bubble chat-bubble--right'" >
+        <button class="btn btn-primary" (click)="connectToAgent()">Not Helpful? Connect To Agent</button>
+
+      </div>
+    </div>
+    <div class="col-md-3" *ngIf="item.messageId>4">
+    
+      
+        <div [class]="'chat-bubble chat-bubble--right'" [innerHtml]="item.message">
+
+      </div>
+    
+
+    
+    
+    
+
+   </div>
+
+  
+</div>
+
+<div class="row" *ngIf="!bot">
+  <div class="col-12">
+    <div class="chat-box-tray" style="    position: fixed;
+    left: 0;
+    width: 100%;">
+    
+    <input type="text" [(ngModel)]="userText" placeholder="Type your message here...">
+    
+    <i class="fa fa-paper-plane" (click)="sendMessage(userText)"></i>
+    </div>
+  </div>
+</div>
+</div>
+
+</ion-content> 
+ 
+
+  <!-- <div class="col-sm-3" >
+    <div class="card">
+      <div class="card-body">
+        <div class="details-action">
+   
+          <button (click)="toggleStatus(conversation.id,0)" *ngIf="conversation['isAvailable']==1" class="btn btn-warning waves-effect waves-light"><i class="fa fa-eye"></i>Make InActive</button>
+          <button (click)="toggleStatus(conversation.id,1)" *ngIf="conversation['isAvailable']==0" class="btn btn-warning waves-effect waves-light"><i class="fa fa-eye-slash"></i>Make Active</button>
+          <button  (click)="edit(conversation)" class="btn btn-primary waves-effect waves-light"><i class="fa fa-edit"></i>Edit</button>
+          <button  (click)="delete(conversation)" class="btn btn-danger waves-effect waves-light"><i class="fa fa-trash"></i>Delete</button>
+        </div>
+      </div>
+    </div>
+     
+  </div> 
+</div> -->
+
+
+
+  

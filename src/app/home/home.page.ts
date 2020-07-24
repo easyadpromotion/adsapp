@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { UserService } from 'src/app/user.service';
 import { Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/http-service.service';
@@ -28,10 +28,13 @@ export class HomePage implements OnInit {
   ]
   
   profilePic
-    constructor(public menuCtrl: MenuController,public loaderService: LoaderService, public userService:UserService,private router: Router, public geolocation: Geolocation, public httpService: HttpServiceService) {
+    constructor(public menuCtrl: MenuController,public loaderService: LoaderService, public userService:UserService,private router: Router, public geolocation: Geolocation, public httpService: HttpServiceService,public platform:Platform) {
       if(localStorage.getItem('key')===null)
       {
         this.router.navigate(['/home'])
+      }
+      if(localStorage.getItem('userData')==null){
+        this.router.navigateByUrl('/login')
       }
      }
   
@@ -42,6 +45,9 @@ export class HomePage implements OnInit {
       //   console.log(res.data);
        
       //  });
+      if(localStorage.getItem('userData')==null){
+        this.router.navigateByUrl('/login')
+      }
       this.loaderService.hideLoader()
     }
   
@@ -50,6 +56,9 @@ export class HomePage implements OnInit {
     ionViewWillEnter()
     {
       
+      if(localStorage.getItem('userData')==null){
+        this.router.navigateByUrl('/login')
+      }
       this.user = JSON.parse(localStorage.getItem('userData'))
       console.log("User",this.user)
      this.profilePic=this.user['profilePic']!=''?this.getSplittedname(this.user['profilePic']):null;

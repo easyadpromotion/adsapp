@@ -1,0 +1,124 @@
+
+   <div class="header details-header">
+    <div class="header-title">
+      <img src="assets/images/left-icon.png" routerLink="/home">
+      <ion-title> Help and Support </ion-title>
+    </div>
+  </div>
+
+  <div class="page view-list">
+    <ion-grid>
+      <ion-row>
+        <ion-col><button [class]="action=='Opened'?'active':''" (click)="openTickets()">Open</button></ion-col>
+        <ion-col><button [class]="action=='Closed'?'active':''" (click)="closedTickets()">Closed</button></ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <img src="assets/nomessage.png" *ngIf="!json || !json.length">
+    <div style="text-align: center;margin-top:20px;" *ngIf="!json || !json.length">
+        <h4 style="margin-bottom:15px">No Records Found</h4>
+        <p>No ads in your inbox, just like every other day. Soon we post new ads</p>
+      </div>
+      
+      <div class="card rounded-corner" [hidden]="(action=='Opened' && !items.status) || (action=='Closed' && items.status)" (click)="conversationList(items)" *ngFor="let items of json;let i=index" style="margin-top:10px;margin-bottom:10px;">
+     
+            <div class="card-body" style="display: flex;justify-content: space-between;align-items: center;padding:5px">
+                <ion-grid style="margin-bottom: 0px;">
+                <ion-row>
+                    <ion-col size="8">
+                        <span> <b>#{{i+1}}</b> Issue in {{items.type}}</span>
+                    </ion-col>
+                    <ion-col>
+                        <span><button  class="btn btn-round btn-primary" >{{items.status?'Active':'Closed'}}</button></span>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>  
+                
+            </div>
+      </div>
+
+     
+
+  </div>
+<div class="page-title-box" *ngIf="false">
+  <div class="row align-items-center">
+      <div class="col-sm-6">
+          <h4 class="page-title">Ticket Management</h4>
+      </div>
+      <div class="col-sm-6">
+          <ol class="breadcrumb float-right">
+              <li class="breadcrumb-item"><a href="javascript:void(0);">Ticket Management</a></li>
+              <li class="breadcrumb-item active">List</li>
+          </ol>
+      </div>
+  </div> <!-- end row -->
+</div>
+
+
+<div class="page-wrapper" *ngIf="false">
+  <div class="page-wrapper-inner">
+
+      <!-- Left Sid enav -->
+      
+      <!-- end left-sidenav-->
+
+      <!-- Page Content-->
+      <div class="page-content">
+          <div class="container-fluid"> 
+              <div class="row">
+                  <div class="col-lg-12">
+                      
+                      <div class="card">
+                          
+                          <div class="card-body">
+                              <!-- <button type="button"  class="btn btn-primary waves-effect waves-light pull-right" (click)="add()">Add+</button> -->
+                              <h4 class="mt-0 header-title">Ticket Management</h4>
+                              <p class="sub-title">Ticket Management list's
+                              </p>
+                              
+                              <div class="table-responsive">
+                                  <table class="table mb-0">
+                                      <thead class="thead-default">
+                                          <tr>
+                                              <th>#</th>
+                                              <th>Subject</th>
+                                              <th>Support Type</th>
+                                              <th>Message</th>
+                                              <th>Status</th>
+                                              <th>Active</th>
+                                              <th>Actions</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr *ngFor="let items of json;let i=index">
+                                              <th scope="row">#{{i+1}}</th>
+                                              <td>{{items.subject}}</td>
+                                              <td>{{items.supportType}}</td>
+                                              <td>{{items.message}}</td>
+                                              <td>{{items.status}}</td>
+                                              <td>{{items.isAvailable?"Yes":"No"}}</td>
+                                              <!-- <td ><i class="fa fa-eye primary-text" (click)="details(items)"></i> view</td> -->
+                                               <td ><i class="fa fa-eye primary-text" ></i> view</td>
+                                              
+                                          </tr>
+                                          <tr *ngIf="!json.length">
+                                              <td colspan="4" style="text-align: center;">No Items found to display</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div><!--end card-->
+                  </div><!--end col-->
+              </div>
+              
+          </div><!-- container -->
+
+         
+      </div>
+      <!-- end page content -->
+  </div>
+  <!--end page-wrapper-inner -->
+</div>
+
+

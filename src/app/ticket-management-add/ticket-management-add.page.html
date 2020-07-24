@@ -1,0 +1,42 @@
+<div class="page-title-box">
+  <div class="row align-items-center">
+    <div class="col-sm-6">
+      <h4 class="page-title">Ticket Management</h4>
+    </div>
+    <div class="col-sm-6">
+      <ol class="breadcrumb float-right">
+        <li class="breadcrumb-item"><a href="javascript:void(0);">Ticket Management</a></li>
+        <li class="breadcrumb-item active">Add</li>
+      </ol>
+    </div>
+  </div> <!-- end row -->
+</div>
+
+<div class="row">
+  <div class="col-12" [formGroup]="ticketManagementForm">
+    <div class="card m-b-30">
+      <div class="card-body">
+        <div class="row">          
+          
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Message</label>
+            <input class="form-control" formControlName="message" placeholder="Enter Message">
+            <small class="form-text text-muted invalid-data"
+              *ngIf="ticketManagementForm.controls['message'].invalid && (ticketManagementForm.controls['message'].dirty || ticketManagementForm.controls['message'].touched)"
+              class="invalid-data">
+              Please enter message </small>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 footer-button">
+            <button type="button" class="btn btn-primary waves-effect waves-light pull-right"
+              [disabled]="!ticketManagementForm.valid" (click)="submit(ticketManagementForm.value)">Submit</button>
+
+            <button type="button" routerLink="/ticket-management-list"
+              class="btn btn-dark waves-effect waves-light pull-right">Cancel</button>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

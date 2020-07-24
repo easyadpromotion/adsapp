@@ -1,0 +1,84 @@
+<div class="header">
+  <div class="header-title">
+    <img src="assets/images/left-icon.png" routerLink="/home">
+    <ion-title> Wallet Transactions </ion-title> 
+  </div>
+  <!-- <h1 class="amount">&#8377;{{userWAmount}}</h1> -->
+  
+
+<div class="profile">
+    
+  <div class="card" style="color:#000">
+    
+      <h2 style="margin-top:10px;"><ion-icon class="secondary-text"  name="wallet-outline"></ion-icon>&nbsp; Rs. {{userWAmount}}</h2>
+   
+    <div>
+      <button class="secondary-bg full-button white-text" (click)="redeemAmount()">Redeem</button>
+    
+    </div>
+</div>
+
+
+</div>
+</div>
+
+<ion-content>
+
+  
+  <div class="page list admin-list" >
+    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+       <ion-icon name="add" (click)="add()" ></ion-icon>
+      </ion-fab-button>
+    </ion-fab> -->
+  
+    <div class="card rounded-corner" *ngFor="let item of json | filter:searchTitle;let index=index" (click)="details(item)">
+     
+      <div class="card-body">
+        <div class="container">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="left">
+                 <span class="list-amount">&#8377;{{item.amount.toFixed(2)}}</span>
+              </ion-col>
+              <ion-col class="right">
+                {{item.creditDebit?"Credited":"Debited"}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="left">
+                <i class="fa fa-history secondary-text" style="font-size:20px;"></i>{{utilService.createdAt(item.createdAt)}}
+              </ion-col>
+              <ion-col class="right">
+                <span *ngIf="item.status=='1'" class="success">Completed</span>
+                <span *ngIf="item.status!='1'" class="danger">Failed</span>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+    
+      
+    </div>
+      </div>
+    </div> 
+  
+  </div>
+</ion-content>
+<!-- <ng-template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <label>Name</label>
+    <input type="text" class="form-control" /><br />
+
+    <label>Email</label>
+    <input type="text" class="form-control" /><br />
+  </div>
+  <div class="modal-footer">
+
+<button type="button" class="btn btn-primary pull-right"  (click)="modalRef.hide()">Close</button>
+  </div>
+</ng-template> -->
