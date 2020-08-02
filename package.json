@@ -115,3 +115,9 @@
         "ANDROID_GOOGLE_SERVICES_VERSION": "4.3.3",
         "ANDROID_DEFAULT_NOTIFICATION_ICON": "@mipmap/ic_launcher"
       }
+    },
+    "platforms": [
+      "android"
+    ]
+  }
+}
