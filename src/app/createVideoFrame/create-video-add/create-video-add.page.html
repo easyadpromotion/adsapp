@@ -51,7 +51,7 @@
               <ion-row class="gender">
                 <ion-col  *ngFor="let gender of gender" (click)="toggleGender(gender)">
                   <button [class]="gender.selected?'btn btn-success':'btn btn-primary'"> 
-                    <i *ngIf="gender.selected" class="fa fa-check white-text"></i>
+                    <i *ngIf="gender.setoggleGenderlected" class="fa fa-check white-text"></i>
                     {{gender.name}}</button>
                 </ion-col>
               </ion-row>
@@ -121,6 +121,10 @@
               class="invalid-data">
               Please enter video url </small>
           </div>
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>No Of Seconds</label>
+            {{createVideoForm.value.seconds}}
+          </div>
           <div class="col-xs-12 col-sm-6 col-md-6 " >
             <div class="upload-card" >
               <p *ngIf="createVideoForm.value.locality">{{createVideoForm.value.locality.address}}</p>
@@ -138,7 +142,7 @@
           </div>
         </div>
       </div>
-      <button  class="footer-button white-text"   (click)="submit(createVideoForm.value)">
+      <button  class="footer-button white-text" *ngIf="Pamount1"   (click)="submit(createVideoForm.value)">
         Pay {{Pamount1}}
       </button>
   </div>

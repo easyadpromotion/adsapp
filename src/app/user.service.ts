@@ -46,6 +46,8 @@ referredUser
   updateUser(data){
     data['fcm']=localStorage.getItem('fcm');
     data['addressGeo']=localStorage.getItem('addressGeo');
+    console.log({data})
+    
     this.firebase.updateData('users',this.getUserId()+"",data).then(res=>{
       console.log(res)
     
@@ -63,6 +65,8 @@ referredUser
     loginData['walletAmount']=updatedAmount;
     localStorage.setItem('userData',JSON.stringify(loginData));
   }
+
+  
 
   checkRouteAccess(){
     if(localStorage.getItem('userData')===null){

@@ -139,10 +139,23 @@ const routes: Routes = [
   {
     path: 'conversation-details',
     loadChildren: () => import('./conversation-details/conversation-details.module').then( m => m.ConversationDetailsPageModule)
-  },  {
+  },
+  {
     path: 'tickets',
     loadChildren: () => import('./tickets/tickets.module').then( m => m.TicketsPageModule)
+  },
+  {
+    path:'forgot-password',
+    loadChildren: ()=> import('./forgot-password/forgot-password.module').then(m=>m.ForgotPasswordPageModule)
+  },  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'update-profile',
+    loadChildren: () => import('./update-profile/update-profile.module').then( m => m.UpdateProfilePageModule)
   }
+
 
 
 

@@ -1,0 +1,115 @@
+<div class="header">
+  <div style="display: flex;
+    font-size: 25px;
+    align-items: baseline;justify-content: space-between;" >
+    <p class="welcome-message" (click)="openMenu()">
+      <img *ngIf="(profilePic)"  [src]="httpService.videoUrl+(profilePic)"  width="30%" routerLink='/home'> 
+      <span  *ngIf="!profilePic ||  profilePic.null">
+      <ion-avatar slot="start">
+        <img src="assets/male.png" *ngIf="user&&user&&user.gender=='Male'">
+        <img src="assets/female.png" *ngIf="user&&user&&user.gender=='Female'">
+        <img src="assets/transgender.png" *ngIf="user&&user&&user.gender=='Other'">
+      </ion-avatar>
+    </span> <span style="display: flex;flex-direction: column;"> <a style="color: #fff;font-size:16px;font-weight: bold;" *ngIf="user && user">{{user.name}}</a><a style="color: #fff;font-size:14px">{{userLocation}}</a></span> 
+  </p>
+    <ion-icon name="build" style="margin-right:10px;font-size: 35px;" (click)="updateProfile(user)"></ion-icon>
+    
+</div>
+
+
+<!-- 
+
+<div class="profile">
+    
+  <div class="card" style="color:#000">
+    
+      <h2 style="margin-top:10px;"><ion-icon class="secondary-text"  name="wallet-outline"></ion-icon>&nbsp; Rs. {{userWAmount}}</h2>
+   
+    <hr>
+    <p>Want to  <b>&nbsp;earn&nbsp;</b>more points? <ion-icon name="chevron-forward-outline"  routerLink="/refer-page"></ion-icon></p>
+  
+    <div>
+      <button class="secondary-bg full-button white-text" (click)="redeemAmount()">Redeem</button>
+    </div>
+</div>
+
+
+</div> -->
+
+</div>
+<div >
+ 
+<div class="page">
+  <div class="card">
+    <div class="card-body huge-details">
+<div class="row">
+          
+            
+  <div class="col-xs-12 col-sm-6 col-md-6">
+    <label>Name</label>
+    <span>{{user['name']}}</span>
+  </div>
+
+          
+  <div class="col-xs-12 col-sm-6 col-md-6">
+    <label>Phone Number</label>
+    <span>{{user['phoneNumber']}}</span>
+  </div>
+
+          
+  <div class="col-xs-12 col-sm-6 col-md-6">
+    <label>Email Address</label>
+    <span>{{user['emailAddress']}}</span>
+  </div>
+
+          
+  <div class="col-xs-12 col-sm-6 col-md-6">
+    <label>Gender</label>
+    <span>{{user['gender']}}</span>
+  </div>
+
+          
+  <div class="col-xs-12 col-sm-6 col-md-6">
+    <label>Education Qualification</label>
+    <span>{{user['educationQualification']}}</span>
+  </div>
+
+          
+  <div class="col-xs-12 col-sm-6 col-md-6">
+    <label>Date Of Birth</label>
+    <span>{{user['dateOfBirth'].split('T')[0]}}</span>
+  </div>
+
+  
+
+
+  
+</div>
+</div>
+</div>
+<br><br><br><br>
+</div>
+
+
+
+</div>
+
+
+<div> <br></div>
+
+
+ 
+
+
+
+
+ 
+  
+     
+  
+ 
+
+
+
+
+  

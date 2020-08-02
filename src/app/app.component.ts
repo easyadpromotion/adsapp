@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { google } from "google-maps";
+import { UserService } from './user.service';
 
 declare var google : google;
 
@@ -24,12 +25,12 @@ export class AppComponent {
       icon: 'home-outline',
       roles:["Franchise", "Vendor", "User", "Admin"]
     },
-    // {
-    //   title: 'Profile',
-    //   url: '/profile',
-    //   icon: 'person-outline',
-    //   roles:["Admin","User"]
-    // },
+    {
+      title: 'Profile',
+      url: '/profile',
+      icon: 'person-outline',
+      roles:["Admin","User"]
+    },
     
     {
       title: 'My Ads',
@@ -82,12 +83,12 @@ export class AppComponent {
       icon: 'layers-outline',
       roles:["Franchise", "Vendor", "User", "Admin"]
     },
-    // {
-    //   title: 'Help and Support',
-    //   url: '/help',
-    //   icon: 'key-outline',
-    //   roles:["Franchise", "Vendor", "User", "Admin"]
-    // },
+    {
+      title: 'Help and Support',
+      url: '/help',
+      icon: 'help-circle-outline',
+      roles:["Franchise", "Vendor", "User", "Admin"]
+    },
     {
       title: 'Logout',
       url: '/logout',
@@ -103,6 +104,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     public menu:MenuController,
     private fcm: FCM,
+    public userService:UserService,
     private geolocation: Geolocation
   ) {
     this.initializeApp();
@@ -171,7 +173,6 @@ export class AppComponent {
       // ionic push notification example
       this.fcm.onNotification().subscribe(data => {
         console.log(data);
-        alert('received')
         if (data.wasTapped) {
           console.log('Received in background');
         } else {

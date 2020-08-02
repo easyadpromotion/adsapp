@@ -87,8 +87,8 @@ ionViewWillEnter(){
 
 edit(data) {
   console.log(data)
-  localStorage.setItem('editData', JSON.stringify(data));
-  this.router.navigate(['/create-photo-frame-edit'])
+  localStorage.setItem('editData', JSON.stringify(this.data));
+  this.router.navigate(['/survey-questions-edit'])
 }
 
 likeUsers(){

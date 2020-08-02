@@ -377,6 +377,10 @@ totalAmount
 	
 	  }
 
+	  toggleGender(gender){
+		gender.selected=!gender.selected
+	  }
+
   validateCustomFields = () => {
 		return new Promise((resolve,reject)=>{
 			if (this.surveyQuestionsForm.value.contactShow && this.surveyQuestionsForm.value.contactConfigure == '') {

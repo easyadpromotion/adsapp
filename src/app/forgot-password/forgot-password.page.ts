@@ -7,6 +7,7 @@ import { AlertService } from 'src/app/alert.service';
 import { LoaderService } from 'src/app/loader.service';
 import { UserService } from 'src/app/user.service';
 import { UtilService } from 'src/app/util.service';
+import { FirebaseDbService } from '../firebase-db.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -14,20 +15,22 @@ import { UtilService } from 'src/app/util.service';
   styleUrls: ['./forgot-password.page.scss'],
 })
 export class ForgotPasswordPage implements OnInit {
-  otpSend = true;
-  otpVerify=true;
+  otpSend = false;
+  otpVerify=false;
   timer = 0;
   minutes = 0;
-  otp = 0;
+  otp = '';
   open='false';
   opens='false';
   numberOpen='true';
   localData;
   error="";
+  verified=false;
   forgotPasswordForm:FormGroup;
+  
   constructor(private formBuilder:FormBuilder, private router:Router,public loadingCtrl: LoadingController,
     public httpService:HttpServiceService, public alertService:AlertService,
-    public userService:UserService,public util:UtilService,
+    public userService:UserService,public util:UtilService, public firebase:FirebaseDbService,
     public loaderService:LoaderService) { }
 
   ngOnInit() { this.loaderService.hideLoader();
@@ -47,22 +50,11 @@ export class ForgotPasswordPage implements OnInit {
 
   ionViewWillEnter()
   {
-    // this.forgotPasswordForm = this.formBuilder.group({
-    //   phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-    //   otpVerified: ['-', [Validators.required]],
-    //   id: ['-', [Validators.required]],
-    //   otp: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-    //   password:['', [Validators.required]],
-    //   confirmPassword:['', [Validators.required]]
-     
-
-    // });
-
+  
   }
 
   removeError(){
     this.error="";
-    this.otpSend=true;
   }
 
   ngOnDestroy(){
@@ -71,45 +63,40 @@ export class ForgotPasswordPage implements OnInit {
     this.open='';
   }
   
-  //data['phoneNumber']=this.forgotPasswordForm.value.phoneNumber;
+  
   sendOtp(data){
    
-console.log(data)
-   this.otpSend=true;
+  
    this.error="";
-    this.httpService.postApi({phoneNumber:data['phoneNumber']},'user/getByCondition').subscribe((res: any) => {
-     console.log(res.data);
-    
-     if(!res.data.length){
-       this.error="Cannot find your account";
-       this.forgotPasswordForm.reset();
-      // return;
-       this.otpSend=true;
-     }
-     data['otp']='';
-     data['_id']=res.data[0]._id;
-     data['password']=res.data[0].password
-      if(res.data[0].phoneNumber)
-      {
-     
-          this.httpService.postApi(data,'user/updateOtpDetails/' + data._id).subscribe((res: any) => {
-            console.log(res);
-            if(res.success){
-              this.open = 'true';
-              console.log(this.open); 
-                console.log("send otp");
-             }
-             else{
-              this.alertService.presentAlert('Error',res["message"],'Okay');
-             }
-            })
+   
+
+   this.loaderService.showLoader('Logging in, please wait ').then(() => {
+    try {
+     let fb= this.firebase.getDb().collection('users', ref =>
+            ref.where('phoneNumber', '==', data.phoneNumber)
+          ).snapshotChanges().subscribe(res=>{
+            console.log({res})
+            this.loaderService.hideLoader();
+          if(res.length){
+            let firedata=res[0].payload.doc.data();
+            this.otp=this.util.generateSMSOTP();
+            this.httpService.smsApi(data.phoneNumber,this.otp);
+            this.firebase.updateData('users',data.phoneNumber+"",{otp:this.otp});
+            this.open='true';
+            this.otpSend=true;
+            
+          }else{
+              this.error="Cannot find your account";
+              this.forgotPasswordForm.reset();
+              this.alertService.presentAlert('Error','',this.error);
           }
-      else{
-        console.log("entered mobile number doesnot exist");
-      }
-    })
-    this.otpSend = false;
-    this.otpVerify = true;
+          fb.unsubscribe();
+        });
+    }catch(e){
+
+    }   
+  });
+
    
   }
 
@@ -117,60 +104,29 @@ console.log(data)
 
   verifyOtp(data){
    
-    //data['id']="5ea80baf729f5d60a56550f0";
-    data['phoneNumber']=this.forgotPasswordForm.value.phoneNumber;
-    this.httpService.postApi({phoneNumber:data['phoneNumber']},'user/getByCondition').subscribe((res: any) => {
-      localStorage.setItem('verifyotp', JSON.stringify(res["data"]));
-     // console.log(res["data"])
-      if(res.data[0].otp==this.forgotPasswordForm.value.otp)
-      {
-        
-        this.opens = 'true';
-        this.open='false';
-        this.numberOpen='false';
-       // this.otpSend=false;
-        console.log(this.opens);
-        this.otpVerify = false;
-         // console.log("send otp");
-      }
-      else{
-        console.log("otp entered is wrong");
-        this.alertService.presentAlert('Error','Wrong OTP is entered','Okay');
-        this.otpVerify =true;
-      }
-    })
-    this.otpVerify = false;
+    if(data.otp==this.otp)
+    {
+      this.opens = 'true';
+      this.open='false';
+      this.numberOpen='false';
+      this.otpVerify=true;
+      this.verified=true;
+    }
+    else{
+      this.alertService.presentAlert('Error','Wrong OTP is entered','Okay');
+    }
   }
 
   submit(data)
   {
-    this.localData = JSON.parse(localStorage.getItem('verifyData'))
-    data['phoneNumber']=this.forgotPasswordForm.value.phoneNumber;
-    console.log("localData",this.localData);
-    this.httpService.postApi({phoneNumber: data['phoneNumber']},'user/getByCondition').subscribe((res: any) => {
-     console.log(res.data[0]._id);
-    
-     data['id']=res.data[0]._id;
-    
     if(data.password==data.confirmPassword)
     {
-      console.log("passwords matched");
-      this.httpService.postApi({_id:data['id'],password:this.forgotPasswordForm.value.password}, 'user/updateDetails/' + data.id).subscribe((res: any) => {
+      this.firebase.updateData('users',data['phoneNumber']+"",{password:data.password}).then(()=>{
         this.loaderService.hideLoader();
-        if (res["success"]) {
-          this.alertService.presentAlert('Success','Password changed Successfully','Okay');
-          this.router.navigate(['/login'])
-       
-        } else {
-          this.alertService.presentAlert('Error',res["message"],'Okay');
-        }
-      },(err)=>{
-        
-        this.loaderService.hideLoader();
-        this.alertService.presentNetworkAlert();
-       });
+        this.alertService.presentAlert('Success','Password got updated successfully','Okay')
+        this.router.navigateByUrl('/login')
+      })
     }
-  })
   }
  
 

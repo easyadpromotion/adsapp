@@ -9,6 +9,7 @@ import { UserService } from 'src/app/user.service';
 import { UtilService } from 'src/app/util.service';
 import * as moment from 'moment';
 import { google } from "google-maps";
+import { FirebaseDbService } from 'src/app/firebase-db.service';
 
 declare var google : google;
 
@@ -18,10 +19,19 @@ declare var google : google;
   styleUrls: ['./create-video-edit.page.scss'],
 })
 export class CreateVideoEditPage implements OnInit {
-  createVideoForm: FormGroup;
+  totalAmount
+  GoogleAutocomplete: google.maps.places.AutocompleteService;
+autocomplete: { input: string; };
+autocompleteItems: any[];
+location: any;
+placeid: any;
+
+// maps end 
+
+  createPhotoFrameForm: FormGroup;
   loading;
-  vid
   types: any = [];
+  frames = [];
   ages=[
     {name:'20-30'},
     {name:'30-40'},
@@ -29,9 +39,9 @@ export class CreateVideoEditPage implements OnInit {
     {name:'50-60'}
   ]
   gender=[
-    {name:'Male'},
-    {name:'Female'},
-    {name:'Other'},
+    {name:'Male',selected:false},
+    {name:'Female',selected:false},
+    {name:'Other',selected:false},
   ]
   dropdownSettings = {
     singleSelection: false,
@@ -40,115 +50,116 @@ export class CreateVideoEditPage implements OnInit {
     selectAllText: 'Select All',
     unSelectAllText: 'UnSelect All',
     itemsShowLimit: 3,
-    allowSearchFilter: true
+    enableCheckAll:true,
+    allowSearchFilter: false,
+    closeDropDownOnSelection:true
   }
-  videoResponse;
-  Pamount1;
-  GoogleAutocomplete: google.maps.places.AutocompleteService;
-  autocomplete: { input: string; };
-  autocompleteItems: any[];
-  location: any;
-  placeid: any;
-  // maps end 
-  totalAmount
-  myDate=[]
 
+  imageFrames:any =[];
+  photoResponse
+  Pamount1;
+  myDate=[]
+  editData:any={};
   startDate
   endDate
-
+  m
+  n
   newdate
-  editDetails
   constructor(private formBuilder: FormBuilder, private router: Router, public loadingCtrl: LoadingController,
     public httpService: HttpServiceService, public alertService: AlertService,
-    public userService: UserService,public zone: NgZone, public util:UtilService,
-    public loaderService: LoaderService) {
-      this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
-      this.autocomplete = { input: '' };
-      this.autocompleteItems = [];
-     }
+    public userService: UserService, public firebase:FirebaseDbService,
+    public loaderService: LoaderService, public utilService: UtilService,public util:UtilService,
+    public zone: NgZone) { 
+    }
 
     
-    updateSearchResults(){
-      if (this.autocomplete.input == '') {
-        this.autocompleteItems = [];
-        return;
-      }
-      this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
-      (predictions, status) => {
-        this.autocompleteItems = [];
-        this.zone.run(() => {
-          predictions.forEach((prediction) => {
-            this.autocompleteItems.push(prediction);
-            console.log({prediction})
-          });
-        });
-      });
+
+    toggleGender(gender){
+      gender.selected=!gender.selected
     }
+
     selectSearchResult(item) {
       this.location = item;
-      this.createVideoForm.patchValue({locality:item})
+      this.createPhotoFrameForm.patchValue({locality:item})
     }
 
-   
-
-  ngOnInit() { this.loaderService.hideLoader();
-    this.createVideoForm = this.formBuilder.group({
-      _id: ['', [Validators.required]],
+  ngOnInit() { 
+    this.loaderService.hideLoader();
+    this.createPhotoFrameForm = this.formBuilder.group({
       name: ['', [Validators.required]],
-
       description: ['', [Validators.required]],
-
-      
-      targetType: ['', [Validators.required]],
-
-     
+      locality: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
-
-      endDate: ['', [Validators.required]],
-      category:[],
-       locality: ['', [Validators.required]],
-      //  seconds: ['',[Validators.required]],
-       isAvailable: ['',[Validators.required]]
+      endDate: ['', [Validators.required]]
     });
 
-    this.httpService.getApi('educationQualifications/getAll').subscribe((res) => {
-      console.log(res)
-      this.types = res
-    })
-
-    this.loaderService.showLoader('Please wait, while fetching details').then(()=>{
-    
-      this.editDetails = JSON.parse(localStorage.getItem('editData'))
-      this.createVideoForm.patchValue(this.editDetails);
-      console.log(  this.editDetails)
-     this.loaderService.hideLoader();
-     
-    })
-
-
-   // this.createVideoForm.patchValue({targetType:[{name:'Male'},{name:'Female'},{name:'Other'}]})
+    this.editData=JSON.parse(localStorage.getItem('editData'));
+    // this.createPhotoFrameForm.patchValue(this.editData)
+    // this.gender=this.editData['gender'];
+    // this.createPhotoFrameForm.patchValue({targetType:[{name:'Male'},{name:'Female'},{name:'Other'}]})
   }
 
-  // allClickedCategories(){
-  //   this.createVideoForm.patchValue({targetType:['Btech']})
-  //   if(this.createVideoForm.value.targetType.length){
+  getParamsAsObject(query) {
 
-  //   }
-  // }
+    query = query.substring(query.indexOf('?') + 1);
 
+    var re = /([^&=]+)=?([^&]*)/g;
+    var decodeRE = /\+/g;
 
-  ionViewWillEnter(){
-  
-    // if(localStorage.getItem('form')!==null){
-    //   let data=JSON.parse(localStorage.getItem('form'));
-    //   console.error(data)
-    //   this.createVideoForm.patchValue(data);
-    //   this.Pamount1=data['paymentAmount']
-    // }else{
-    //   this.createVideoForm.reset()
-    // }
+    var decode = function (str) {
+        return decodeURIComponent(str.replace(decodeRE, " "));
+    };
+
+    var params = {}, e;
+    while (e = re.exec(query)) {
+        var k = decode(e[1]), v = decode(e[2]);
+        if (k.substring(k.length - 2) === '[]') {
+            k = k.substring(0, k.length - 2);
+            (params[k] || (params[k] = [])).push(v);
+        }
+        else params[k] = v;
+    }
+
+    var assign = function (obj, keyPath, value) {
+        var lastKeyIndex = keyPath.length - 1;
+        for (var i = 0; i < lastKeyIndex; ++i) {
+            var key = keyPath[i];
+            if (!(key in obj))
+                obj[key] = {}
+            obj = obj[key];
+        }
+        obj[keyPath[lastKeyIndex]] = value;
+    }
+
+    for (var prop in params) {
+        var structure = prop.split('[');
+        if (structure.length > 1) {
+            var levels = [];
+            structure.forEach(function (item, i) {
+                var key = item.replace(/[?[\]\\ ]/g, '');
+                levels.push(key);
+            });
+            assign(params, levels, params[prop]);
+            delete(params[prop]);
+        }
+    }
+    return params;
+  }
+
+ 
+  ionViewWillEnter() {
+    
+    if(localStorage.getItem('form')!==null){
+      
+      let data=JSON.parse(localStorage.getItem('form'));
+		this.createPhotoFrameForm.patchValue(data);
+		
+        this.Pamount1=data['paymentAmount']
+    }else{
+      this.createPhotoFrameForm.reset()
+    }
     if(localStorage.getItem('searchAddress')!==null){
-      this.createVideoForm.patchValue({locality:
+      this.createPhotoFrameForm.patchValue({locality:
         {
           lat:localStorage.getItem('searchLat'),
           lng:localStorage.getItem('searchLng'),
@@ -157,27 +168,49 @@ export class CreateVideoEditPage implements OnInit {
         })
         
     }
+
+    this.editData=JSON.parse(localStorage.getItem('editData'));
+    this.createPhotoFrameForm.patchValue(this.editData)
+    this.gender=this.editData['gender'];
   }
 
+  getFrames() {
+    this.httpService.getApi('photoFrames').subscribe(res => {
+      this.frames = res;
+      console.log(this.frames)
+    })
+  }
+  getImageFrames(){
+    console.log(this.createPhotoFrameForm.value.photoFrameCategory)
+    this.frames.forEach(element => {
+      if(element['_id'] == this.createPhotoFrameForm.value.photoFrameCategory){
+        this.imageFrames = element.images
+      }
+      else{
+        console.log("no item found")
+      }
+    });
+    console.log(this.imageFrames)
+  }
+
+
+  //image upload function
   onFileChange(event) {
 
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       const formData = new FormData();
-    //  this.myFunction()
-       formData.append('file', file);
-     // var vid=document.getElementById('file');
-      this.loaderService.showLoader('Uploading video, please wait ').then(() => {
+      formData.append('file', file);
+      this.loaderService.showLoader('Uploading photo, please wait ').then(() => {
         try {
-          this.httpService.upload(formData, 'api/upload').subscribe(res => {
+          this.httpService.upload(formData, 'api/uploadImage').subscribe(res => {
             this.loaderService.hideLoader();
             console.log(res)
-            this.createVideoForm.patchValue({
-              videoUrl: res.file,
-              videoImage: res.thumbnail
-            })
+            this.createPhotoFrameForm.patchValue({
+              photoFrameUrl: res.file
+            }) 
           }, (err) => {
-  
+
             this.loaderService.hideLoader();
             this.alertService.presentNetworkAlert();
           });
@@ -187,144 +220,74 @@ export class CreateVideoEditPage implements OnInit {
         }
       })
 
+  
 
     }
   }
 
-  // targetChange(data)
-  // {
-  //   try{
-  //     let seconds=this.createVideoForm.value.seconds;
-  //     this.Pamount1=((seconds*(0.1))*data).toFixed(2);
-  //       this.createVideoForm.patchValue({'paymentAmount':this.Pamount1});
-  //       console.log("paymentAmount", this.Pamount1);
-  //       this.totalAmount=(((this.Pamount1)*70)/100).toFixed(2);
-  //       this.createVideoForm.patchValue({'amount':this.totalAmount});
-  //   }catch(e){
 
-  //   }
-  //   console.log(data);
-   
-
-  // }
+  targetChange(data)
+  {
+    this.Pamount1=data*1;
+      this.createPhotoFrameForm.patchValue({'paymentAmount':this.Pamount1});
+      console.log("paymentAmount",this.Pamount1);
+    this.totalAmount=((this.Pamount1)*70)/100;
+      console.log("Amount", this.totalAmount);
+      this.createPhotoFrameForm.patchValue({'amount': this.totalAmount});
+  }
 
   submit(data) {
-   
-
-// data['targetReached'] ="0";
-// data['userId']=this.userService.getUserId();
-// data['isAvailable']="0";
-// data['skip']=1;
-//  data['paymentStatus']="0";
-// data['targetAge']='-';
-// console.log(this.userService.getUserId())
-
-
-data['updatedAt'] = new Date().getTime();
-//data['amount']= this.totalAmount;
-console.log(data)
-    if (!this.createVideoForm.valid) {
+    data['updatedAt'] = new Date().toISOString();
+    data['gender']=this.gender;
+     
+    if (!this.createPhotoFrameForm.valid) {
       console.log(data)
-			this.util.enableFromValidation(this.createVideoForm);
+			this.util.enableFromValidation(this.createPhotoFrameForm);
 			return;
-		}
-  
-   
-    this.startDate = this.createVideoForm.value.startDate 
-    console.log(moment(new Date(this.startDate)))
-    this.startDate=(new Date(this.startDate));
-    console.log( "moment",moment(this.startDate).isAfter(moment().format('LL')))
-    console.log( "moments",moment(this.startDate).isSame(moment().format('LL')))
-    console.log( "moment1",moment(this.startDate).isSameOrBefore(moment(this.endDate))) 
+    }
+    this.loaderService.showLoader('');
+      this.startDate = this.createPhotoFrameForm.value.startDate 
+      this.startDate=(new Date(this.startDate));
+    
+      this.endDate=this.createPhotoFrameForm.value.endDate
+      this.endDate=(new Date(this.endDate));
+      this.m=moment(this.startDate)
+      this.n=moment(this.endDate)
 
-      this.endDate=this.createVideoForm.value.endDate
-  
-
-      if(moment((this.startDate)).isSameOrAfter(moment().format('LL')) && moment(this.startDate).isSameOrBefore(moment(this.endDate)))
+      console.log(this.m,this.n)
+     
+      if(moment(this.startDate).isSameOrBefore(moment(this.endDate)))
       {
-      console.log("yes")
-      this.loaderService.showLoader('Updating, please wait ').then(() => {
-        try {
-          this.httpService.postApi(data, 'createVideo/updateDetails/'+data.id).subscribe((res) => {
-            this.loaderService.hideLoader();
-            if (res["success"]) {
-              this.videoResponse = res['data']
-              this.alertService.presentAlert('Success', 'Video is Edited successfully', 'Okay');
-              this.clearData()
-               this.router.navigate(['/create-video-list'])
-             // this.payment();
-            } else {
-              this.alertService.presentAlert('Error', res["message"], 'Okay');
-            }
-          }, (err) => {
-  
-            this.loaderService.hideLoader();
-            this.alertService.presentNetworkAlert();
-          });
-        } catch (e) {
-          this.loaderService.hideLoader();
-          this.alertService.presentAlert('Error', 'Something went wrong, please try again', 'Okay');
-        }
-      })
-      }
 
+        this.firebase.updateData('videoads',this.editData.id,data).then(()=>{
+          this.loaderService.hideLoader();
+          this.router.navigateByUrl('/create-video-list');
+        })
+        
+      }
       else
       {
+        this.loaderService.hideLoader();
         this.alertService.presentAlert('Error',"Please check the dates you have entered", 'Okay');
-      }
-
-   
+      } 
 
   }
 
-  // selectAll(){
-  //   this.createVideoForm.patchValue({targetType:'Male'})
-  // }
+  pai(data){
+    this.loaderService.showLoader('');
+    this.add(data);
+  }
 
-  // payment() {
-  //   this.videoResponse['isAvailable']="1";
-  //   this.loaderService.showLoader('Processing payment, please wait').then(() => {
-  //     try {
-  //       this.httpService.postApi(this.videoResponse, 'paymentStatus').subscribe((res) => {
-  //         this.loaderService.hideLoader();
-  //         if (res["success"]) {
-  //           //make use of payment response
-  //           if (res['data']['paymentStatus'] == 0) {
-  //             //this.alertService.presentAlert('Success', 'Payment not done', 'Okay');
-  //           }
-  //           else if (res['data']['paymentStatus'] == 1) {
-  //             //update isavailable in video edit
-  //             this.videoResponse['isAvailable'] ='1'
-  //             this.videoResponse['updatedAt'] = new Date().getTime();
-  //             this.httpService.postApi(this.videoResponse, 'createVideo/updateDetails/'+this.videoResponse['_id']).subscribe((res) => {
-  //               if(res["success"]){
-  //                 //this.alertService.presentAlert('Success', 'Successfully updated', 'Okay');
-  //                 this.clearData()
-  //                 this.router.navigate(['/create-video-list'])
-  //               }else{
-  //                 this.alertService.presentAlert('Error', res["message"], 'Okay');
-  //               }
-  //             })
-  //             // this.alertService.presentAlert('Success', 'Payment Success', 'Okay');
-  //           }
-  //           else {
-  //             this.alertService.presentAlert('Failed', 'Payment Failed', 'Okay');
-  //           }
-  //           //this.router.navigate(['/create-video-list'])
-  //         } else {
-  //           this.alertService.presentAlert('Error', res["message"], 'Okay');
-  //         }
-  //       }, (err) => {
+  add(data){
+    localStorage.removeItem('form'); 
+    localStorage.removeItem('searchAddres');
+    this.firebase.addData('photoads',data).then(res=>{
+      this.alertService.presentAlert('Success','Photo ad was promoted successfully','Okay');
+      this.router.navigateByUrl('/create-video-list');
+    })
+    
+  }
 
-  //         this.loaderService.hideLoader();
-  //         this.alertService.presentNetworkAlert();
-  //       });
-  //     } catch (e) {
-  //       this.loaderService.hideLoader();
-  //       this.alertService.presentAlert('Error', 'Something went wrong, please try again', 'Okay');
-  //     }
-  //   })
-  // }
 
   clearData(){
     localStorage.removeItem('form');
@@ -334,8 +297,12 @@ console.log(data)
 
   getLocality(){
     localStorage.setItem('url','/create-video-edit')
-    localStorage.setItem('form',JSON.stringify(this.createVideoForm.value));
+    localStorage.setItem('form',JSON.stringify(this.createPhotoFrameForm.value));
     this.router.navigateByUrl('/maps');
   }
 
 }
+
+
+
+

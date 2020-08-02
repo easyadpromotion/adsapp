@@ -46,7 +46,7 @@ export class CreateVideoAddPage implements OnInit {
     allowSearchFilter: true
   }
   videoResponse;
-  Pamount1;
+  Pamount1:any=0;
   GoogleAutocomplete: google.maps.places.AutocompleteService;
   autocomplete: { input: string; };
   autocompleteItems: any[];
@@ -69,12 +69,16 @@ export class CreateVideoAddPage implements OnInit {
      
      }
 
+     toggleGender(gender){
+      gender.selected=!gender.selected
+    }
    
     ionViewWillEnter(){
       if(localStorage.getItem('form')!==null){
         let data=JSON.parse(localStorage.getItem('form'));
         console.error(data)
         this.createVideoForm.patchValue(data);
+        
         this.Pamount1=data['paymentAmount']
       }else{
         this.createVideoForm.reset()
@@ -206,7 +210,7 @@ export class CreateVideoAddPage implements OnInit {
           this.httpService.upload(formData, 'api/upload').subscribe(res => {
             this.loaderService.hideLoader();
             this.createVideoForm.patchValue({seconds:duration})
-            this.targetChange(this.createVideoForm.value.targetCount)
+            this.targetChange(this.createVideoForm.value.targetCount,duration)
       console.log(this.createVideoForm.value)
             console.log(res)
             this.createVideoForm.patchValue({
@@ -239,14 +243,27 @@ export class CreateVideoAddPage implements OnInit {
     this.createVideoForm.patchValue({targetType:'Male'})
   }
 
-  targetChange(data)
+  targetChange(data,duration)
   {
-    this.Pamount1=data*1;
+    try {
+      
+      this.Pamount1=(((eval(duration+""))*0.10)*eval(this.createVideoForm.value.targetCount)).toFixed(2);
+      if(isNaN(this.Pamount1)){
+        this.Pamount1=0;
+        return;
+      }
       this.createVideoForm.patchValue({'paymentAmount':this.Pamount1});
       console.log("paymentAmount",this.Pamount1);
     this.totalAmount=((this.Pamount1)*70)/100;
+    if(this.totalAmount<0){
+      this.totalAmount*=-1;
+    }
       console.log("Amount", this.totalAmount);
-      this.createVideoForm.patchValue({'amount': this.totalAmount});
+      this.createVideoForm.patchValue({'amount': this.totalAmount});  
+    } catch (error) {
+      
+    }
+    
   }
 
   submit(data) {

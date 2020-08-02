@@ -25,7 +25,7 @@ export class ConversationDetailsPage implements OnInit {
   bot=true;
   selection=true;
   // @ViewChild('content') private content: any;
-  @ViewChild('content', { static: false }) content: IonContent
+  @ViewChild('content', { static: false }) content:any
   constructor(private router:Router,
     public httpService:HttpServiceService, public alertService:AlertService,
     public util:UtilService,public userService: UserService,public firebase:FirebaseDbService,
@@ -38,12 +38,13 @@ export class ConversationDetailsPage implements OnInit {
 
     ionViewWillEnter(){
       this.conversation = JSON.parse(localStorage.getItem('conversation'))
+      this.conversation['conversationId']=this.conversation['id']
       console.log('c',this.conversation)
       this.loaderService.hideLoader()
       let fb=this.firebase.getDb().collection('conversation', ref =>
       ref.where('conversationId', '==', this.conversation['id'])
     ).snapshotChanges().subscribe(res=>{
-      console.log({res})
+      
       this.allConversations=[];
       res.forEach(item=>{
         this.allConversations.push(item.payload.doc.data());
@@ -53,7 +54,13 @@ export class ConversationDetailsPage implements OnInit {
           this.selection=false;
           
         }
-        this.content.scrollToBottom(300);
+        console.log(this.content.nativeElement)
+        
+        setTimeout(()=>{
+          let el=this.content.nativeElement;
+          el.scrollTop = Math.max(0, el.scrollHeight - el.offsetHeight);
+        },500)
+        
       })
       
       setTimeout(()=>{

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.eap.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Eap India</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
+<widget id="io.eap.starter" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Easy Ads Promotion</name>
+    <description>Can promote business.</description>
+    <author email="hi@ionicframework.com" href="http://innotes.com/">Innostes Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

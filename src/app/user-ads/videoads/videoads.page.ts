@@ -35,7 +35,7 @@ export class VideoadsPage implements OnInit {
     public menuCtrl:MenuController) { }
 
   ngOnInit() {
-    this.loadData();
+    
    }
 
   capitalize(name){
@@ -49,6 +49,11 @@ export class VideoadsPage implements OnInit {
     let lat=localStorage.getItem('userLat');
     let lng=localStorage.getItem('userLng');
     this.location =  JSON.parse(localStorage.getItem('addressGeo'))
+    if(!this.location){
+      this.alertService.presentAlert('Error','Unable to fetch location, please reload application','ok');
+      this.loaderService.hideLoader();
+      return
+    }
     let fb=this.firebase.getDb().collection('videoads', ref =>
       ref.where('isAvailable', '==', true)
     ).snapshotChanges().subscribe(res=>{
@@ -70,11 +75,7 @@ export class VideoadsPage implements OnInit {
               }else{
                 return;
               }
-        if(!this.location){
-          this.alertService.presentAlert('Error','Unable to fetch location, please reload application','ok');
-          this.loaderService.hideLoader();
-          return
-        }
+       
         this.location.forEach(element => {
           console.log(photoAddress[0] , JSON.stringify(element.long_name), JSON.stringify(element.short_name))
           if(photoAddress[0] == element.long_name || photoAddress[0] == element.short_name){
@@ -94,7 +95,7 @@ export class VideoadsPage implements OnInit {
 ionViewWillEnter()
 {
 
-
+  this.loadData();
 }
 
 

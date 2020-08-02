@@ -75,9 +75,25 @@ data1:any={}
     this.router.navigate(['/change-password'])
   }
   
+ 
   redeemAmount()
   {
-   this.alertService.presentAlert('Error','Amount less than Rs.100 cannot be redeemed','Okay')
+    if(this.userService.getWalletAmount()<2){
+      this.alertService.presentAlert('Error','Wallet amount must be atleast 2rs to redeem','Ok');
+      return;
+    }
+    //instead gpsAddress use upiAddress
+    console.log(this.user)
+   if(!this.user.upiAddress || this.user.upiAddress == "")
+   {
+    this.presentPrompt();
+   
+   }
+    else{
+    this.redeem(this.user.upiAddress);
+    }
+
+
   }
  
   async presentPrompt() {
@@ -102,42 +118,7 @@ data1:any={}
           handler: data => {
             if ((data.upiAddress)) {
               // logged in!
-              console.log(data.upiAddress)
-            
-              this.data1=this.user[0];
-              this.data1['upiAddress']=data.upiAddress;
-              this.data1['walletAmount']='0'
-             console.log(this.data1)
-              data['updatedAt']=new Date().getTime();
-              this.loaderService.showLoader('Updating Please wait ..').then(()=>{
-                try{
-                  this.httpService.postApi(this.data1, 'user/updateDetails/' + this.data1['_id']).subscribe((res: any) => {
-                    this.loaderService.hideLoader();
-                    if (res["success"]) {
-                      let redeemdata:any = {}
-    redeemdata['userId']=this.user[0]._id;
-    redeemdata['amount']=this.user[0].walletAmount;
-    redeemdata['status']='1';
-    redeemdata['isAvailable']='1';
-console.log(redeemdata)
-    // this.redeem.redeemRequest(redeemdata);
-                      this.alertService.presentAlert('Success','Successfully updated','Okay');
-                      localStorage.setItem('userData', JSON.stringify([this.data1]));
-                      console.log("data",this.data1)
-                      this.router.navigate(['/home'])
-                    } else {
-                      this.alertService.presentAlert('Error',res["message"],'Okay');
-                    }
-                  },(err)=>{
-                    
-                    this.loaderService.hideLoader();
-                    this.alertService.presentNetworkAlert();
-                   });    
-                }catch(e){
-                  this.loaderService.hideLoader();
-                  this.alertService.presentAlert('Error','Something went wrong please try again','Okay');
-                }
-              })
+              this.redeem(data.upiAddress);
 
               //
             } 
@@ -152,46 +133,25 @@ console.log(redeemdata)
    await alert.present();
   }
 
-  // public openModal(template: TemplateRef<any>){
-  //   this.modalRef = this.modalService.show(template);
-  // }
-  presentPrompt1()
-  {
-
+  redeem(upi){
     
+    let amount=this.userService.getWalletAmount();
+    let json=
+    {
+      userId:this.userService.getUserId(),
+      amount,
+      createdAt:new Date().toISOString(),
+      status:1,
+      upiAddress:upi
+    }
 
-    this.data1=this.user[0];
-   
-    this.data1['walletAmount']='0'
-    this.data1['updatedAt']=new Date().getTime();
-    this.loaderService.showLoader('Updating Please wait ..').then(()=>{
-      try{
-        this.httpService.postApi(this.data1, 'user/updateDetails/' + this.data1['_id']).subscribe((res: any) => {
-          this.loaderService.hideLoader();
-          if (res["success"]) {
-            let redeemdata:any = {}
-    redeemdata['userId']=this.user[0]._id;
-    redeemdata['amount']=this.user[0].walletAmount;
-    redeemdata['status']='1';
-    redeemdata['isAvailable']='1';
-console.log(redeemdata)
-    // this.redeem.redeemRequest(redeemdata);
-            this.alertService.presentAlert('Success','Successfully updated','Okay');
-            localStorage.setItem('userData', JSON.stringify([this.data1]));
-            console.log("data",this.data1)
-            this.router.navigate(['/home'])
-          } else {
-            this.alertService.presentAlert('Error',res["message"],'Okay');
-          }
-        },(err)=>{
-          
-          this.loaderService.hideLoader();
-          this.alertService.presentNetworkAlert();
-         });    
-      }catch(e){
-        this.loaderService.hideLoader();
-        this.alertService.presentAlert('Error','Something went wrong please try again','Okay');
-      }
-    })
+    alert(upi)
+    this.firebase.addData('redeemRequests',json);
+    let loginData=this.userService.getLoginData();
+    loginData['walletAmount']=0.0;
+    loginData['upiAddress']=upi;
+    this.userService.updateUser(loginData);
+    localStorage.setItem('userData',JSON.stringify(loginData));
   }
+
 }

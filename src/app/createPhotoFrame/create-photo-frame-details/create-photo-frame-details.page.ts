@@ -37,7 +37,7 @@ export class CreatePhotoFrameDetailsPage implements OnInit {
   ngOnInit() { this.loaderService.hideLoader();
     // this.loaderService.showLoader('Please wait').then(()=>{
      
-    
+    this.ionViewWillEnter()
   }
 
   ionViewWillEnter(){

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild,NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoaderService } from '../loader.service';
+import { Platform } from '@ionic/angular';
 declare var google;
 
 
@@ -18,9 +19,10 @@ export class MapsPage implements OnInit {
   latitude: number = 0;
   longitude: number = 0;
   geo: any
+  height=0;
 
   service = new google.maps.places.AutocompleteService();
-  constructor(public zone:NgZone,public router:Router,public loader:LoaderService) {
+  constructor(public zone:NgZone,public router:Router,public loader:LoaderService,public platform:Platform) {
     this.autocompleteItems = [];
     this.autocomplete = {
       query: ''
@@ -29,16 +31,16 @@ export class MapsPage implements OnInit {
 
   ngOnInit() { 
      this.loader.hideLoader();
-    
+      this.height=this.platform.height();
   }
 
   chooseItem(item: any) {
     // this.viewCtrl.dismiss(item);
-    console.log(item)
+    console.log('item',item)
     this.geo = item;
-    console.log(this.geo)
+    console.log('geo',this.geo)
     this.autocomplete.query=item;
-    console.log(this.autocomplete.query)
+    console.log('quer',this.autocomplete.query)
     this.geoCode(this.geo);//convert Address to lat and long
 
     this.autocompleteItems=[];

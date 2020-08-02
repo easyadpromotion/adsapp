@@ -29,8 +29,7 @@ import { FirebaseDbService } from 'src/app/firebase-db.service';
     public httpService:HttpServiceService, public alertService:AlertService,
     public userService:UserService, public firebase:FirebaseDbService,
     public loaderService:LoaderService,public utilService:UtilService) {
-    this.createPhotoFrame = JSON.parse(localStorage.getItem('createPhotoFrameDetails'))
-    console.log("photo frame details",this.createPhotoFrame)
+    
   }
 
   ngOnInit() { this.loaderService.hideLoader();
@@ -88,8 +87,8 @@ import { FirebaseDbService } from 'src/app/firebase-db.service';
   
   edit(data) {
     console.log(data)
-    localStorage.setItem('editData', JSON.stringify(data));
-    this.router.navigate(['/create-photo-frame-edit'])
+    localStorage.setItem('editData', JSON.stringify(this.data));
+    this.router.navigate(['/create-video-edit'])
   }
 
   likeUsers(){

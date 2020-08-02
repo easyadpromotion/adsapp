@@ -26,7 +26,9 @@ export class HelpPage implements OnInit {
     this.firebase.readDataCond('tickets').snapshotChanges().subscribe(res=>{
       this.json=[];
       res.forEach(item=>{
-        this.json.push(item.payload.doc.data())
+        let json=item.payload.doc.data();
+        json['id']=item.payload.doc.id;
+        this.json.push(json)
       })
       console.log(this.json)
       this.loaderService.hideLoader()

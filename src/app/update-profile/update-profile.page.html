@@ -1,0 +1,103 @@
+
+
+
+<div class="header">
+  <div class="header-title">
+    <img src="assets/images/left-icon.png" routerLink="/profile">
+    <ion-title> Profile Update </ion-title> 
+  </div>
+</div>
+
+<div class="page white-bg form-page">
+  <div [formGroup]="updateProfile" class="form">
+    <div class="card-body">
+      <div class="row">
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Name *</label>
+          <input class="form-control" formControlName="name" placeholder="Enter Name">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="updateProfile.controls['name'].invalid && (updateProfile.controls['name'].dirty || updateProfile.controls['name'].touched)"
+            class="invalid-data">
+            Please enter name          </small>
+        </div>
+          
+                  
+              
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Email ID </label>
+          <input class="form-control" formControlName="emailAddress" placeholder="Enter Email ID">
+          <small class="form-text text-muted invalid-data"
+            *ngIf="updateProfile.controls['emailAddress'].invalid && (updateProfile.controls['emailAddress'].dirty || updateProfile.controls['emailAddress'].touched)"
+            class="invalid-data">
+            Please enter email id          </small>
+        </div>
+          
+                  
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Gender *</label>
+         <!-- <input class="form-control" formControlName="gender" placeholder="Enter Gender">-->
+          <select class="form-control"  formControlName="gender" placeholder="Enter Gender">
+            <option value="">Select Gender</option>
+            <option *ngFor="let items of gender" [value]="items['name']">{{items['name']}}</option>
+          </select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="updateProfile.controls['gender'].invalid && (updateProfile.controls['gender'].dirty || updateProfile.controls['gender'].touched)"
+            class="invalid-data">
+            Please enter gender          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Education Qualification *</label>
+          <select class='form-control' formControlName="educationQualification" placeholder="Enter Education Qualification">
+            <option value="">Select  Education Qualification</option>
+            <option *ngFor="let items of educationQualifications" [value]="items['name']">{{items['name']}}</option></select>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="updateProfile.controls['educationQualification'].invalid && (updateProfile.controls['educationQualification'].dirty || updateProfile.controls['educationQualification'].touched)"
+            class="invalid-data">
+            Please enter education qualification          </small>
+        </div>
+          
+                  
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Date Of Birth *</label>
+          <ion-datetime  displayFormat="DD/MM/YYYY" placeholder="Enter Date of birth" formControlName="dateOfBirth"  class="form-control"></ion-datetime>
+          <small class="form-text text-muted invalid-data"
+            *ngIf="updateProfile.controls['dateOfBirth'].invalid && (updateProfile.controls['dateOfBirth'].dirty || updateProfile.controls['dateOfBirth'].touched)"
+            class="invalid-data">
+            Please enter date of birth          </small>
+        </div>
+          
+             
+        
+ 
+
+        <div class="col-xs-12 col-sm-6 col-md-6">
+          <label>Profile Picture</label>
+          <input class="form-control" type="file" (change)="onFileChange($event)" placeholder="Enter Photo Url">
+         
+         
+        </div>
+
+        <div style="text-align: center;width:100%">
+          <img *ngIf="(profilePic)"  [src]="httpService.videoUrl+((profilePic))"  width="30%">
+          <ion-item  *ngIf="!profilePic ||  profilePic.null || ((profilePic.length)<2)" >
+            <ion-avatar slot="start">
+              <img src="assets/male.png" *ngIf="editDetails.gender=='Male'">
+              <img src="assets/female.png" *ngIf="editDetails.gender=='Female'">
+              <img src="assets/transgender.png" *ngIf="editDetails.gender=='Other'">
+            </ion-avatar>
+          </ion-item> 
+        </div>
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+<button class="footer-button"    (click)="submit(updateProfile.value)">Update Profile</button>
+
+
